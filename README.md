@@ -2,6 +2,13 @@
 
 ### Welcome! [Here](https://learning-together.fly.dev/) is our website!!  
 
+## Tech 
+
+- Python (Flask, jinjya, venv)
+- Postgres
+- Docker 
+- Fly.io
+
 ## How to start 
 
 Prerequisite - Python3 
