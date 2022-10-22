@@ -1,6 +1,6 @@
 # learning-together_python
 
-### Welcome! [Here](https://fly.io/apps/learning-together) is our website!!  
+### Welcome! [Here](https://learning-together.fly.dev/) is our website!!  
 
 ## How to start 
 
