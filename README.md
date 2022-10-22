@@ -18,7 +18,7 @@ Prerequisite - Python3
 
 6. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
-7. When you ready to share your change push `development` branch in Github. 
+7. When you ready to share your change, push `development` branch in Github. 
 
 ## GitHub Container Registry 
 
