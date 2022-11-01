@@ -28,8 +28,27 @@
 {% block Header %}
 {% include "header.html"%}
 {% endblock %}
-<div>
-	<h1 class="m-5 text-center text-capitalize"> Register </h1>
+<div class="d-flex flex-column align-items-center mt-5">
+	<div class="card w-50 d-flex flex-column align-items-center shadow">
+		<h1 class="mt-5 text-center text-capitalize"> SignIn </h1>
+		<form class="row g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
+			{{form.hidden_tag()}}
+			<div class="col-12 form-group d-flex flex-column">
+				{{ form.login_email.label }}
+				{{ form.login_email(class_="form-control", size=50) }}
+			</div>
+			<div class="col-12 d-flex flex-column">
+				{{ form.login_password.label }}
+				{{ form.login_password(class_="form-control", size=50) }}
+			</div>
+			<div class="col-12 d-flex align-items-center justify-content-center">
+				{{ form.submit_login(class_= "form-control") }}
+			</div>
+		</form>
+	</div>
 </div>
+{% block Footer %}
+{% include "footer.html" %}
+{% endblock%}
 </body>
 </html>

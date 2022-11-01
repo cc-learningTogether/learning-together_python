@@ -1,25 +1,42 @@
 from flask import Flask, render_template
-from flask_bootstrap import Bootstrap4
+from dotenv import load_dotenv
+from flask_bootstrap import Bootstrap5
+from utils.form import LoginForm, RegisterForm
+from datetime import datetime
 import os
 
+# initialize the env variable
+load_dotenv()
+
 app = Flask(__name__)
-bootstrap = Bootstrap4(app)
+# set Secret key (required from wtForms
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+# add bootstrap version 5 to the application
+bootstrap = Bootstrap5(app)
 SITE_NAME = "Learning Together"
+
+year = datetime.now().year
 
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', year=year)
 
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    return render_template('register.html', name=SITE_NAME)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        print(form.email.data)
+    return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template('login.html', name=SITE_NAME)
+    form = LoginForm()
+    if form.validate_on_submit():
+        print(form.login_email.data)
+    return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 
 
 @app.route('/logout', methods=["GET", "POST"])
