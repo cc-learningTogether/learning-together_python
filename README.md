@@ -15,17 +15,24 @@ Prerequisite - Python3
 
 1. `git clone` this project. 
 
-2. Create your own virtual environment. `[test@localhost ~]$ python3 -m venv .<name>` 
+2. Create virtual environment. <br>
 
-3. Enter the virtual environment. `source .<name>/bin/activate`
+  * __Linux and Apple users__
+    * 1. Type `[test@localhost ~]$ python3 -m venv .<name>` 
+    * 2. Enter the virtual environment. `source .<name>/bin/activate`
+  
+  * __Windows users__
+    * 1. Type `>virtualenv .<name>` 
+    * 2. Enter the virtual environment. `>.<name>\Scripts\activate`
+  
+3. Install packages. `pip install -r requirements.txt`
 
-4. Install packages. `pip install -r requirements.txt`
+4. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
+   ※mattiaのコードは python main.py
 
-5. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
+5. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
-6. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
-
-7. When you ready to share your change, push `development` branch in Github. 
+6. When you ready to share your change, push `development` branch in Github. 
 
 ## GitHub Container Registry 
 
