@@ -27,7 +27,18 @@ Prerequisite - Python3
 
 7. When you ready to share your change, push `development` branch in Github. 
 
-## GitHub Container Registry 
+## How to start docker container 
+
+1. Check containers `docker ps -a`
+
+2. Create a new container, start the container  `docker run --name <prefer container name> -p <your prefer port number>:8080 -d <docker image name>` <br>
+  If you've already created a container , you can start the container with `docker start <container name>`<br>
+  Also you can stop the container `docker stop <container name>`
+  
+3. If you'd like to have a look inside the container, `docker container exec -it <container name> bash`
+  if you'd like to exit, type `exit` in the terminal. 
+
+## How to get a image from GitHub Container Registry 
 
 #### Download Docker image from [here](https://github.com/users/miku0129/packages/container/package/learning-together_docker%2Flearning-together)
 
