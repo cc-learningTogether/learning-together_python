@@ -9,3 +9,7 @@ class User(UserMixin):
         self.id = user["user_id"]
         self.username = user["username"]
         self.email = user["email"]
+
+    def login(self):
+        print("hello")
+        return True

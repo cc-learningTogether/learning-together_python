@@ -7,6 +7,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 from app import create_app
 from test_data_folder.user_data import users
 from utils.user import User
+
 import os
 
 app = create_app()
@@ -34,7 +35,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         email = form.login_email.data
-        # TODO change this part with the database model for the user
+        # TODO change this part with the database model for the user.py
         #  (user1 = the value you get from the database after the input check)
         # -------- test data --------
         user = [user for user in users if user["email"] == email][0]
