@@ -2,4 +2,4 @@
 .dockerignore
 .idea
 .env
-utils/__pycache__/form.cpython-39.pyc
+__pycache__
