@@ -5,6 +5,7 @@ from utils.form import LoginForm, RegisterForm
 from datetime import datetime
 from flask_login import LoginManager, current_user, login_user, logout_user
 from app import create_app
+from test_data_folder.user_data import users
 from utils.user import User
 import os
 
@@ -30,12 +31,15 @@ def register():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    from test_data_folder.user_data import users
     form = LoginForm()
     if form.validate_on_submit():
         email = form.login_email.data
+        # TODO change this part with the database model for the user
+        #  (user1 = the value you get from the database after the input check)
+        # -------- test data --------
         user = [user for user in users if user["email"] == email][0]
-        user1 = User(user)
+        user1 = User(user)  # this class can be used for the input check or can be deleted
+        # -------------------------
         login_user(user1)
     return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 

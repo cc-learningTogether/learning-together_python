@@ -3,7 +3,18 @@ from dotenv import load_dotenv
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from test_data_folder.user_data import users
+from database.db import db
 import os
+
+load_dotenv()
+
+POSTGRES_URL = os.getenv("POSTGRES_URL")
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PW = os.getenv("POSTGRES_PW")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL,
+                                                               db=POSTGRES_DB)
 
 
 def create_app():
@@ -23,9 +34,5 @@ def create_app():
     def load_user(user_id):
         user = [user for user in users if user["user_id"] == int(user_id)]
         return user[0]
-
-    if __name__ == "__main__":
-        port = int(os.environ.get('PORT', 8080))
-        app.run(debug=True, host='0.0.0.0', port=port)
 
     return app
