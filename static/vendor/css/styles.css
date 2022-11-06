@@ -56,3 +56,16 @@ nav{
 home-link{
       text-decoration:none;
 }
+
+/* Form */
+
+#submit_register, #submit_login{
+    color:white;
+    background-color: #6200ea;
+    width:25%;
+}
+
+.form-group{
+    display: flex;
+    justify-content: start;
+}

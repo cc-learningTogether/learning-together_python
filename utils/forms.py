@@ -1,0 +1,19 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField, SelectField, EmailField
+from wtforms.validators import DataRequired
+
+
+# Register Form
+class RegisterForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()],
+                           render_kw={"placeholder": "Discord server Username"})
+    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    # TODO set language field to required when database is ready
+    language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
+    gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
+    # TODO set is_supporter field to required when database is ready
+    is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
+    submit_register = SubmitField("Sign Up!")
