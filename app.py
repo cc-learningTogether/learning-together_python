@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from dotenv import load_dotenv
 from datetime import datetime
-from utils.forms import RegisterForm
+from utils.forms import RegisterForm, LoginForm
 import os
 
 # load_dotenv make possible to use a .env file for store the environment variable
@@ -40,6 +40,15 @@ def signup():
         print(data)
         return render_template('index.html', year=year)
     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
+
+
+@app.route('/signin', methods=["GET", "POST"])
+def signin():
+    form = LoginForm()
+    if form.validate_on_submit():
+        print(form.login_email.data)
+        return render_template('index.html', year=year)
+    return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 
 
 if __name__ == "__main__":

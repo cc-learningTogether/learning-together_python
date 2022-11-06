@@ -17,3 +17,11 @@ class RegisterForm(FlaskForm):
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit_register = SubmitField("Sign Up!")
+
+
+# Login form
+
+class LoginForm(FlaskForm):
+    login_email = StringField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    login_password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    submit_login = SubmitField("Sign In")
