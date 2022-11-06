@@ -2,9 +2,8 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
-from test_data_folder.user_data import users
 from database.db import db
-import urllib.parse
+from database.user import User
 import os
 
 load_dotenv()
@@ -52,7 +51,6 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         # TODO change with the value
-        user = [user for user in users if user["user_id"] == int(user_id)]
-        return user[0]
+        return User.query.get(int(user_id))
 
     return app
