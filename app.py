@@ -28,6 +28,7 @@ def home():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
+        # TODO complete when database is ready
         data = {
             "user_id": "",
             "username": form.username.data,
@@ -46,7 +47,11 @@ def signup():
 def signin():
     form = LoginForm()
     if form.validate_on_submit():
-        print(form.login_email.data)
+        data = {
+            form.login_password.data
+        }
+        # TODO complete when database is ready
+        print(data)
         return render_template('index.html', year=year)
     return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 
