@@ -48,6 +48,7 @@ def signin():
     form = LoginForm()
     if form.validate_on_submit():
         data = {
+            form.login_email.data,
             form.login_password.data
         }
         # TODO complete when database is ready
