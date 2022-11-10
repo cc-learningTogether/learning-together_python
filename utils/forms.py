@@ -22,6 +22,22 @@ class RegisterForm(FlaskForm):
 # Login form
 
 class LoginForm(FlaskForm):
-    login_email = StringField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    login_email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
     login_password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Password"})
     submit_login = SubmitField("Sign In")
+
+
+# Require new password form
+class ForgotPswForm(FlaskForm):
+    email_forgot_password = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    submit_forgot_password = SubmitField("Send Email!")
+
+
+# change password form
+
+class ChangePSWForm(FlaskForm):
+    password_change_password = PasswordField('Password', validators=[DataRequired()],
+                                             render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    submit_change_password = SubmitField("Change Password")

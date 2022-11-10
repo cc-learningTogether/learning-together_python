@@ -59,7 +59,7 @@ home-link{
 
 /* Form */
 
-#submit_register, #submit_login{
+#submit_register, #submit_login, #submit_forgot_password{
     color:white;
     background-color: #6200ea;
     width:25%;
