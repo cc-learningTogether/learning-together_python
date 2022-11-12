@@ -1,0 +1,71 @@
+html {
+  height: 100%;
+}
+
+body{
+    width: 100%;
+    min-height:100%;
+}
+
+h1, h2, h3, p{
+    font-family: "Ubuntu";
+    color: #2c3e50;
+}
+
+a{
+    color: #6200ea;
+}
+
+a:hover{
+    color: red;
+}
+
+
+.text-gray{
+    color: rgb(78, 77, 77)!important;
+}
+
+.text-shadow-gold{
+    text-shadow: 2px 2px 5px #ffc107!important;
+}
+
+.text-shadow-gray{
+    text-shadow: 2px 2px 5px rgb(181, 178, 178)!important;
+}
+
+.text-shadow-dark{
+    text-shadow: 2px 2px 5px  rgb(78, 77, 77)!important;
+}
+
+.shadow{
+    box-shadow: 2px 2px 5px rgb(181, 178, 178)!important;
+}
+
+.shadow-dark{
+    box-shadow: 2px 2px 5px rgb(78, 77, 77)!important;
+}
+
+
+/* Header */
+
+nav{
+    background-color: #6200ea;
+    height: 3rem;
+}
+
+home-link{
+      text-decoration:none;
+}
+
+/* Form */
+
+#submit_register, #submit_login, #submit_forgot_password{
+    color:white;
+    background-color: #6200ea;
+    width:25%;
+}
+
+.form-group{
+    display: flex;
+    justify-content: start;
+}
