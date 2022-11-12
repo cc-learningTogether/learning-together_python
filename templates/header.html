@@ -1,0 +1,7 @@
+<nav class="navbar text-white">
+	<div class="container-fluid">
+		{% if name: %}
+		<a class="navbar-brand mb-0 h1 text-white" href="{{url_for('home')}}"> {{name}}</a>
+		{% endif %}
+	</div>
+</nav>
