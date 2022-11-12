@@ -1,6 +1,6 @@
 .venv_learning-together
 .dockerignore
-venv
+.venv
 .idea
 .env
 __pycache__
