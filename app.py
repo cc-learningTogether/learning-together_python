@@ -4,12 +4,18 @@ from dotenv import load_dotenv
 from datetime import datetime
 from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 import os
+from flask_sqlalchemy import SQLAlchemy
 
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
+
+#connect to database
+db = SQLAlchemy(app)
+
 
 # Initialize Bootstrap5
 bootstrap = Bootstrap5(app)
@@ -39,6 +45,9 @@ def signup():
             "is_supporter": form.is_supporter.data
         }
         print(data)
+
+        ##
+
         return render_template('index.html', year=year)
     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
 
