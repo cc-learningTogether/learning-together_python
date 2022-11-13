@@ -28,6 +28,8 @@ Prerequisite - Installing Python, docker and docker-compose
 3. Install packages. `pip install -r requirements.txt`
 
 4. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
+  - DEV
+    - If you add package, add that information to requirementx.txt: `pip freeze > requirements.txt`
 
 5. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
