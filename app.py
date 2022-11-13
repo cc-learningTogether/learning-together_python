@@ -15,6 +15,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
 
 
+
 #connect to database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
