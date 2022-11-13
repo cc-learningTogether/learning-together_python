@@ -30,6 +30,7 @@ Prerequisite - Installing Python, docker and docker-compose
 4. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
   - DEV
     - If you add package, add that information to requirementx.txt: `pip freeze > requirements.txt`
+    - To connect database via Flask-SQLArchemy, URL of the database should start from `postgresql:// ~ `
 
 5. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
