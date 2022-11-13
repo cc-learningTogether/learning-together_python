@@ -13,10 +13,6 @@ import os
 
 app = create_app()
 
-SITE_NAME = "Learning Together"
-
-year = datetime.now().year
-
 app.register_blueprint(home_route)
 
 # @app.route('/')

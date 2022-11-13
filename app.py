@@ -20,14 +20,9 @@ DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USE
 def create_app():
     # initialize the env variable
     load_dotenv()
-    POSTGRES_URL = os.getenv("POSTGRES_URL")
-    POSTGRES_USER = os.getenv("POSTGRES_USER")
-    POSTGRES_PW = os.getenv("POSTGRES_PW")
-    POSTGRES_DB = os.getenv("POSTGRES_DB")
-
-    DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL,
-                                                                   db=POSTGRES_DB)
+                    
     app = Flask(__name__)
+
     # set Secret key (required from wtForms
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     # add bootstrap version 5 to the application
@@ -52,5 +47,7 @@ def create_app():
     def load_user(user_id):
         # TODO change with the value
         return User.query.get(int(user_id))
+
+    # TODO create admin only decorator
 
     return app
