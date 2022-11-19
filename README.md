@@ -11,11 +11,11 @@
 
 ## How to start 
 
-Prerequisite - Python3 
+Prerequisite - Installing Python, docker and docker-compose
 
 1. `git clone` this project. 
 
-2. Create virtual environment. <br>
+2. Create then enter virtual environment. <br>
 
   * __Linux and Apple users__
     * 1. Type `[test@localhost ~]$ python3 -m venv .<name>` 
@@ -28,11 +28,27 @@ Prerequisite - Python3
 3. Install packages. `pip install -r requirements.txt`
 
 4. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
-   ※mattiaのコードは python main.py
 
 5. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
 6. When you ready to share your change, push `development` branch in Github. 
+
+DEV
+--
+
+- If you add package, add that information to requirementx.txt: `pip freeze > requirements.txt`
+- Environment variables
+  - Required values in `.env` : `SECRET_KEY`, `PORT`, `POSTGRES_URL`, `POSTGRES_USER`, `POSTGRES_PW`, `POSTGRES_DB`
+  - To connect database via Flask-SQLArchemy, the value of `POSTGRES_URL` should start from `postgresql:// ~ `
+- Follow [this page](https://flask-migrate.readthedocs.io/en/latest/) to use Flask-SQLAlchemy
+
+## If you start docker container
+
+- start Docker container: `docker compose up` 
+  - [If you change Dockerfile or docker-compose.yml](https://qiita.com/nasuB7373/items/523f1392d87dffb5521d): `docker compose up -d --build`
+  
+- stop & remove Docker container: `docker compose stop`
+
 
 ## GitHub Container Registry 
 
