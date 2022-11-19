@@ -14,17 +14,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
 
-
-
 #connect to database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-
-## This class is for a test. You can remove this class. 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
 
 
 # Initialize Bootstrap5
@@ -55,6 +47,9 @@ def signup():
             "is_supporter": form.is_supporter.data
         }
         print(data)
+
+        ##
+
         return render_template('index.html', year=year)
     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
 
