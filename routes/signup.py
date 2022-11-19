@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
 from utils.forms import RegisterForm
-from utils.constant import YEAR, SITE_NAME
+from utils.constants import YEAR, SITE_NAME
 
 signup_route = Blueprint('signup', __name__, template_folder='routes')
 

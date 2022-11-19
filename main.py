@@ -9,6 +9,7 @@ from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 
 from routes.home import home_route
 from routes.signup import signup_route
+from routes.signin import signin_route
 
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
@@ -27,7 +28,6 @@ app.register_blueprint(home_route)
 #     return render_template('index.html', year=year)
 
 app.register_blueprint(signup_route)
-
 
 # @app.route('/signup', methods=["GET", "POST"])
 # def signup():
@@ -48,18 +48,21 @@ app.register_blueprint(signup_route)
 #     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
 
 
-@app.route('/signin', methods=["GET", "POST"])
-def signin():
-    form = LoginForm()
-    if form.validate_on_submit():
-        data = {
-            form.login_email.data,
-            form.login_password.data
-        }
-        # TODO complete when database is ready
-        print(data)
-        return render_template('index.html', year=year)
-    return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
+app.register_blueprint(signin_route)
+
+
+# @app.route('/signin', methods=["GET", "POST"])
+# def signin():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         data = {
+#             form.login_email.data,
+#             form.login_password.data
+#         }
+#         # TODO complete when database is ready
+#         print(data)
+#         return render_template('index.html', year=year)
+#     return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 
 
 @app.route("/forgot-password", methods=["POST", "GET"])

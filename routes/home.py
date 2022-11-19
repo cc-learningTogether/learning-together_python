@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
-from utils.constant import YEAR
+from utils.constants import YEAR
 
 home_route = Blueprint('home', __name__, template_folder="routes")
 
