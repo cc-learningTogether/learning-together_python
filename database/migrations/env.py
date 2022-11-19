@@ -10,6 +10,7 @@ from alembic import context
 # ! Import the database model under here
 from database.models.user import User
 
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -28,7 +29,6 @@ config.set_main_option(
     str(current_app.extensions['migrate'].db.get_engine().url).replace(
         '%', '%%'))
 target_metadata = current_app.extensions['migrate'].db.metadata
-
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

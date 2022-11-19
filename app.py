@@ -6,6 +6,8 @@ from flask_bootstrap import Bootstrap5
 
 from database.db import db
 
+from alembic import op
+
 DATABASE_URL = os.getenv('URL')
 DATABASE_USER = os.getenv('POSTGRES_USER')
 DATABASE_PW = os.getenv('POSTGRES_PW')
@@ -34,3 +36,4 @@ def create_app():
     migrate.init_app(app, db, directory='database/migrations')
 
     return app
+
