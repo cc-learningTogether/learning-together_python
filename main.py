@@ -7,6 +7,8 @@ from datetime import datetime
 from app import create_app
 from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 
+from routes.home import home_route
+
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
 
@@ -17,10 +19,12 @@ SITE_NAME = "Learning Together"
 
 year = datetime.now().year
 
+app.register_blueprint(home_route)
 
-@app.route('/')
-def home():
-    return render_template('index.html', year=year)
+
+# @app.route('/')
+# def home():
+#     return render_template('index.html', year=year)
 
 
 @app.route('/signup', methods=["GET", "POST"])
