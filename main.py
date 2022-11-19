@@ -8,6 +8,7 @@ from app import create_app
 from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 
 from routes.home import home_route
+from routes.signup import signup_route
 
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
@@ -21,29 +22,30 @@ year = datetime.now().year
 
 app.register_blueprint(home_route)
 
-
 # @app.route('/')
 # def home():
 #     return render_template('index.html', year=year)
 
+app.register_blueprint(signup_route)
 
-@app.route('/signup', methods=["GET", "POST"])
-def signup():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        # TODO complete when database is ready
-        data = {
-            "user_id": "",
-            "username": form.username.data,
-            "email": form.email.data,
-            "password": form.password.data,
-            "gender": form.gender.data,
-            "language": form.language.data,
-            "is_supporter": form.is_supporter.data
-        }
-        print(data)
-        return render_template('index.html', year=year)
-    return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
+
+# @app.route('/signup', methods=["GET", "POST"])
+# def signup():
+#     form = RegisterForm()
+#     if form.validate_on_submit():
+#         # TODO complete when database is ready
+#         data = {
+#             "user_id": "",
+#             "username": form.username.data,
+#             "email": form.email.data,
+#             "password": form.password.data,
+#             "gender": form.gender.data,
+#             "language": form.language.data,
+#             "is_supporter": form.is_supporter.data
+#         }
+#         print(data)
+#         return render_template('index.html', year=year)
+#     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
 
 
 @app.route('/signin', methods=["GET", "POST"])
