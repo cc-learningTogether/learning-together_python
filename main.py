@@ -10,6 +10,8 @@ from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 from routes.home import home_route
 from routes.signup import signup_route
 from routes.signin import signin_route
+from routes.logout import logout_route
+from routes.forgot_password import forgot_password_route
 
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
@@ -50,7 +52,6 @@ app.register_blueprint(signup_route)
 
 app.register_blueprint(signin_route)
 
-
 # @app.route('/signin', methods=["GET", "POST"])
 # def signin():
 #     form = LoginForm()
@@ -64,15 +65,19 @@ app.register_blueprint(signin_route)
 #         return render_template('index.html', year=year)
 #     return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
 
+app.register_blueprint(logout_route)
 
-@app.route("/forgot-password", methods=["POST", "GET"])
-def forgot_password():
-    form_send_email = ForgotPswForm()
-    if form_send_email.validate_on_submit():
-        email = form_send_email.email
-        # TODO verify the presence of the email on the database and send email (Flask email or other)
-        return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
-    return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
+app.register_blueprint(forgot_password_route)
+
+
+# @app.route("/forgot-password", methods=["POST", "GET"])
+# def forgot_password():
+#     form_send_email = ForgotPswForm()
+#     if form_send_email.validate_on_submit():
+#         email = form_send_email.email
+#         # TODO verify the presence of the email on the database and send email (Flask email or other)
+#         return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
+#     return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
 
 
 @app.route("/change-password/<string:token>", methods=["POST", "GET"])
