@@ -1,8 +1,6 @@
-.venv_learning-together
+.venv
 .dockerignore
-venv
-.idea
 .env
+.idea
 __pycache__
 .DS_Store
-.venv
