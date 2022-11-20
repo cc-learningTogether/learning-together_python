@@ -36,8 +36,6 @@ def signup():
                     # TODO add the login stuff here
                     return render_template('index.html', year=YEAR)
                 if response['errors']:
-                    print(response['errors']['username'])
-                    # TODO add the errors messages to the register form
                     return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
                                            messages=response["errors"])
             return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
