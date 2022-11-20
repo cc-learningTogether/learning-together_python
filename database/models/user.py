@@ -1,9 +1,10 @@
 from database.db import db
 from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import UUID
+from flask_login import UserMixin
 
 
-class UserProfile(db.Model):
+class UserProfile(db.Model, UserMixin):
     __tablename__ = 'users_profiles'
     id = db.Column(db.Integer, primary_key=True)
     user_profile_id = db.Column(UUID(as_uuid=True), unique=True)

@@ -1,4 +1,3 @@
-from flask import flash
 from database.models.user import UserProfile
 from database.models.password import UserPassword
 from database.db import db
@@ -53,7 +52,6 @@ def register_input_handler(data):
 
 
 def user_login(form_data):
-    print(form_data)
     """Check if the user is in the database and verify the password"""
     try:
         # verify the presence of the email in the database table
@@ -66,7 +64,6 @@ def user_login(form_data):
         if not check_password_hash(user_password.password, form_data['password']):
             raise ValueError('Incorrect password, try again or change your password')
     except ValueError as e:
-        print(type(str(e)))
         return {
             'user': '',
             'errors': e

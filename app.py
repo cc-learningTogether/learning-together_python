@@ -3,8 +3,10 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 
 from database.db import db
+from database.models.user import UserProfile
 
 DATABASE_URL = os.getenv('URL')
 DATABASE_USER = os.getenv('POSTGRES_USER')
@@ -32,5 +34,14 @@ def create_app():
     # Initialize database and flask-migration
     db.init_app(app)
     migrate.init_app(app, db, directory='database/migrations')
+
+    # Initialize Flask-Login
+    login_manager = LoginManager()
+    login_manager.init_app(app=app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        # TODO change with the value
+        return UserProfile.query.get(int(user_id))
 
     return app

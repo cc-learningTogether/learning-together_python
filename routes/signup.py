@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, abort, url_for, redirect
+from flask import Blueprint, render_template, abort
+from flask_login import login_user, current_user
 from jinja2 import TemplateNotFound
+from werkzeug.security import generate_password_hash
+
 from utils.forms import RegisterForm
 from utils.constants import YEAR, SITE_NAME
 from utils.helper import register_user
-from werkzeug.security import generate_password_hash
 
 signup_route = Blueprint('signup', __name__, template_folder='routes')
 
@@ -33,13 +35,14 @@ def signup():
 
                 response = register_user(data)
                 if response['user']:
-                    # TODO add the login stuff here
-                    return render_template('index.html', year=YEAR)
+                    login_user(response['user'])
+                    return render_template('index.html', year=YEAR, current_user=current_user)
                 if response['errors']:
                     return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
-                                           messages=response["errors"])
+                                           messages=response['errors'], current_user=current_user)
             return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
-                                   pass_check="Password doesn't match", messages="")
-        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, messages="")
+                                   pass_check="Password doesn't match", messages="", current_user=current_user)
+        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, messages="",
+                               current_user=current_user)
     except TemplateNotFound:
         return abort(404)
