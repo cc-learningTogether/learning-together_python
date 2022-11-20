@@ -8,7 +8,8 @@ from flask import current_app
 from alembic import context
 
 # ! Import the database model under here
-from database.models.user import User
+from database.models.user import UserProfile
+from database.models.password import UserPassword
 
 
 # this is the Alembic Config object, which provides
