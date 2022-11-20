@@ -42,6 +42,6 @@ def signup():
                                            messages=response["errors"])
             return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
                                    pass_check="Password doesn't match", messages="")
-        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, mesages="")
+        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, messages="")
     except TemplateNotFound:
         return abort(404)
