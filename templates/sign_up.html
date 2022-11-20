@@ -34,19 +34,32 @@
 		<form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
 			{{form.hidden_tag()}}
 			<div class="col-12 form-group d-flex flex-column">
+				{% if messages["username"]: %}
+				<p class="text-danger">{{messages["username"]}}</p>
+				{% else: %}
 				{{ form.username.label }}
+				{% endif %}
 				{{ form.username(class_="form-control", ) }}
 			</div>
 			<div class="col-12 form-group d-flex flex-column">
 				{{ form.email.label }}
 				{{ form.email(class_="form-control", size=50) }}
 			</div>
+			{%if pass_check :%}
+			<div class="col-12 d-flex justify-content-center align-items-center">
+				<p class="text-danger mb-0">{{pass_check}}</p>
+			</div>
+			{% endif %}
 			<div class="col-md-6 d-flex flex-column">
+				{%if not pass_check %}
 				{{ form.password.label }}
+				{% endif %}
 				{{ form.password(class_="form-control", size=50) }}
 			</div>
 			<div class="col-md-6 d-flex flex-column">
+				{%if not pass_check %}
 				{{ form.confirm_password.label }}
+				{% endif %}
 				{{ form.confirm_password(class_="form-control", size=50) }}
 			</div>
 			<div class="col-md-6 d-flex flex-column">
