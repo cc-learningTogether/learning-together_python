@@ -40,4 +40,4 @@ class ChangePSWForm(FlaskForm):
                                              render_kw={"placeholder": "Password"})
     confirm_password = PasswordField('Password', validators=[DataRequired()],
                                      render_kw={"placeholder": "Confirm Password"})
-    submit_change_password = SubmitField("Change Password")
+    submit_change_password = SubmitField("Submit")
