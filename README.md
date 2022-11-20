@@ -1,24 +1,54 @@
 # learning-together_python
 
-### Welcome! [Here](https://fly.io/apps/learning-together) is our website!!  
+### Welcome! [Here](https://learning-together.fly.dev/) is our website!!  
+
+## Tech 
+
+- Python (Flask, jinjya, venv)
+- Postgres
+- Docker 
+- Fly.io
 
 ## How to start 
 
-Prerequisite - Python3 
+Prerequisite - Installing Python, docker and docker-compose
 
 1. `git clone` this project. 
 
-2. Create your own virtual environment. `[test@localhost ~]$ python3 -m venv .<name>` 
+2. Create then enter virtual environment. <br>
 
-3. Enter the virtual environment. `source .<name>/bin/activate`
+  * __Linux and Apple users__
+    * 1. Type `[test@localhost ~]$ python3 -m venv .<name>` 
+    * 2. Enter the virtual environment. `source .<name>/bin/activate`
+  
+  * __Windows users__
+    * 1. Type `>virtualenv .<name>` 
+    * 2. Enter the virtual environment. `>.<name>\Scripts\activate`
+  
+3. Install packages. `pip install -r requirements.txt`
 
-4. Install packages. `pip install -r requirements.txt`
+4. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
 
-5. You can test that the application works.Run this command on your terminal within the root directory to perform this test: `python app.py`
+5. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
 
-6. To leave the virtual environment. `(.<name>) [test@localhost ~]$ deactivate`
+6. When you ready to share your change, push `development` branch in Github. 
 
-7. When you ready to share your change, push `development` branch in Github. 
+DEV
+--
+
+- If you add package, add that information to requirementx.txt: `pip freeze > requirements.txt`
+- Environment variables
+  - Required values in `.env` : `SECRET_KEY`, `PORT`, `POSTGRES_URL`, `POSTGRES_USER`, `POSTGRES_PW`, `POSTGRES_DB`
+  - To connect database via Flask-SQLArchemy, the value of `POSTGRES_URL` should start from `postgresql:// ~ `
+- Follow [this page](https://flask-migrate.readthedocs.io/en/latest/) to use Flask-SQLAlchemy
+
+## If you start docker container
+
+- start Docker container: `docker compose up` 
+  - [If you change Dockerfile or docker-compose.yml](https://qiita.com/nasuB7373/items/523f1392d87dffb5521d): `docker compose up -d --build`
+  
+- stop & remove Docker container: `docker compose stop`
+
 
 ## GitHub Container Registry 
 
