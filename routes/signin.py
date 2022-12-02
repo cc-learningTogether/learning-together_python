@@ -4,7 +4,7 @@ from jinja2 import TemplateNotFound
 
 from utils.forms import LoginForm
 from utils.constants import YEAR, SITE_NAME
-from utils.helper import user_login
+from utils.models.auth_manager import AuthManager
 
 signin_route = Blueprint('signin', __name__, template_folder='routes')
 
@@ -18,7 +18,7 @@ def signin():
                 "email": form.login_email.data,
                 "password": form.login_password.data
             }
-            response = user_login(data)
+            response = AuthManager(data).user_login()
             if response['user']:
                 login_user(response['user'])
                 return render_template("index.html", year=YEAR, current_user=current_user)

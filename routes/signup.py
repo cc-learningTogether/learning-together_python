@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 
 from utils.forms import RegisterForm
 from utils.constants import YEAR, SITE_NAME
-from utils.helper import register_user
+from utils.models.auth_manager import AuthManager
 
 signup_route = Blueprint('signup', __name__, template_folder='routes')
 
@@ -13,8 +13,8 @@ signup_route = Blueprint('signup', __name__, template_folder='routes')
 @signup_route.route('/signup', methods=['GET', 'POST'])
 def signup():
     try:
-        # TODO add the errors messages to the register form
         form = RegisterForm()
+        # TODO add the errors messages to the register form
         if form.validate_on_submit():
             # TODO complete when database is ready
             if form.password.data == form.confirm_password.data:
@@ -33,7 +33,8 @@ def signup():
                     "is_supporter": form.is_supporter.data
                 }
 
-                response = register_user(data)
+                response = AuthManager(data).register_user()
+
                 if response['user']:
                     login_user(response['user'])
                     return render_template('index.html', year=YEAR, current_user=current_user)
