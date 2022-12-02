@@ -3,5 +3,7 @@
     "dockerComposeFile" : ["../docker-compose.yml"], 
     "service": "web",
     "extensions": ["oderwat.indent-rainbow"],
-    "workspaceFolder": "/app"
+    "workspaceFolder": "/app",
+    "postCreateCommand": "apt update && apt install -y git && .devcontainer/postCreateCommand.sh"
+
 }
