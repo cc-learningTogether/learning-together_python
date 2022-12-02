@@ -1,0 +1,7 @@
+{
+    "name": "ltw remote test",
+    "dockerComposeFile" : ["../docker-compose.yml"], 
+    "service": "web",
+    "extensions": ["oderwat.indent-rainbow"],
+    "workspaceFolder": "/app"
+}
