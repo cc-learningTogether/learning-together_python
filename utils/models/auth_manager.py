@@ -16,7 +16,6 @@ from utils.email import send_change_password_email, send_change_password_confirm
 class AuthManager(UserMixin):
     def __init__(self, form_data):
         self.user_data = form_data
-        print("user= ", form_data)
 
     def register_user(self):
         """Take the form data create a new user in the database and return a user object or and error"""

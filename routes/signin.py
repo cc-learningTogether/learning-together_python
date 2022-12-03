@@ -23,7 +23,7 @@ def signin():
                 login_user(response['user'])
                 # return render_template("index.html", year=YEAR, current_user=current_user)
                 # TODO hide the current user from url
-                return redirect(url_for("home.home", current_user=current_user))
+                return redirect(url_for("home.home"))
             if response['errors']:
                 return render_template('sign_in.html', name=SITE_NAME, form=form, year=YEAR,
                                        errors=str(response['errors']), current_user=current_user)
