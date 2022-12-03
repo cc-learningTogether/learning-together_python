@@ -42,7 +42,7 @@
 				{{ form.username(class_="form-control", ) }}
 			</div>
 			<div class="col-12 form-group d-flex flex-column">
-				{% if messages["username"]: %}
+				{% if messages["email"]: %}
 				<p class="text-danger">{{messages["email"]}}</p>
 				{% else: %}
 				{{ form.email.label }}
