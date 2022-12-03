@@ -16,3 +16,12 @@ def send_change_password_email(user):
     msg.recipients = [user.email]
     msg.html = render_template('email_templates/change_email.html', token=token, name=user.user_name, _external=True)
     mail.send(msg)
+
+
+def send_change_password_confirmation(user):
+    msg = Message()
+    msg.subject = "Learning Together password reset confirmation"
+    msg.sender = os.getenv('MAIL_USERNAME')
+    msg.recipients = [user.email]
+    msg.html = render_template('email_templates/confirm_change_email.html', name=user.user_name, _external=True)
+    mail.send(msg)

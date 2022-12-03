@@ -10,7 +10,7 @@ from database.models.user import UserProfile
 from database.models.password import UserPassword
 
 from utils.helper import register_input_handler
-from utils.email import send_change_password_email
+from utils.email import send_change_password_email, send_change_password_confirmation
 
 
 class AuthManager(UserMixin):
@@ -97,6 +97,7 @@ class AuthManager(UserMixin):
                 db.session.commit()
                 user = UserProfile.query.filter(
                     cast(UserProfile.user_profile_id, String) == str(user_password.user_id)).first()
+                send_change_password_confirmation(user)
                 login_user(user)
                 return True
         except IntegrityError:
