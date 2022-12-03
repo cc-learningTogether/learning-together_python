@@ -1,0 +1,9 @@
+{
+    "name": "ltw remote test",
+    "dockerComposeFile" : ["../docker-compose.yml"], 
+    "service": "web",
+    "extensions": ["oderwat.indent-rainbow"],
+    "workspaceFolder": "/app",
+    "postCreateCommand": "apt update && apt install -y git && .devcontainer/postCreateCommand.sh" // this line is needed to validate github service
+
+}
