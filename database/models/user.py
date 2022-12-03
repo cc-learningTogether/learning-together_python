@@ -1,15 +1,13 @@
 from database.db import db
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import UUID
+from flask_login import UserMixin
 
 
-# from sqlalchemy.dialects.postgresql import UUID
-# import uuid
-
-
-class UserProfile(db.Model):
+class UserProfile(db.Model, UserMixin):
     __tablename__ = 'users_profiles'
     id = db.Column(db.Integer, primary_key=True)
-    user_profile_id = db.Column(db.String(100), unique=True, nullable=False)
+    user_profile_id = db.Column(UUID(as_uuid=True), unique=True)
     user_name = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     gender = db.Column(db.Integer, default=-1)

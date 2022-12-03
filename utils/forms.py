@@ -36,8 +36,8 @@ class ForgotPswForm(FlaskForm):
 # change password form
 
 class ChangePSWForm(FlaskForm):
-    password_change_password = PasswordField('Password', validators=[DataRequired()],
-                                             render_kw={"placeholder": "Password"})
+    password = PasswordField('Password', validators=[DataRequired()],
+                             render_kw={"placeholder": "Password"})
     confirm_password = PasswordField('Password', validators=[DataRequired()],
                                      render_kw={"placeholder": "Confirm Password"})
     submit_change_password = SubmitField("Submit")
