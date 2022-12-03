@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, redirect, url_for
 from flask_login import login_user, current_user
 from jinja2 import TemplateNotFound
 
@@ -21,7 +21,9 @@ def signin():
             response = AuthManager(data).user_login()
             if response['user']:
                 login_user(response['user'])
-                return render_template("index.html", year=YEAR, current_user=current_user)
+                # return render_template("index.html", year=YEAR, current_user=current_user)
+                # TODO hide the current user from url
+                return redirect(url_for("home.home", current_user=current_user))
             if response['errors']:
                 return render_template('sign_in.html', name=SITE_NAME, form=form, year=YEAR,
                                        errors=str(response['errors']), current_user=current_user)

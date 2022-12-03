@@ -36,6 +36,13 @@ from database.models.user import UserProfile
 #         'errors': '',
 #     }
 
+def password_check(string):
+    if len(string) < 6:
+        return 'The password must contain at least 6 characters'
+    if len(string) > 10:
+        return 'The password must contain max 10 characters'
+    return False
+
 
 def register_input_handler(data):
     """take a input value from the register form and return a Integer"""
@@ -74,6 +81,7 @@ def register_input_handler(data):
 
 
 def get_reset_token(user):
+    """create the jwt token"""
     return jwt.encode({'reset_password': user.user_name,
                        'exp': datetime(year=datetime.now().year, month=datetime.now().month,
                                        day=datetime.now().day).now(
@@ -82,6 +90,7 @@ def get_reset_token(user):
 
 
 def verify_reset_token(token):
+    """varify the validity of the jwt token sent by email"""
     try:
         username = jwt.decode(token,
                               key=os.getenv('SECRET_KEY'), algorithms="HS256")['reset_password']

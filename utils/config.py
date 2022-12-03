@@ -3,6 +3,7 @@ import os
 
 
 def database_config():
+    """return the database url"""
     database_url = os.getenv('URL')
     database_user = os.getenv('POSTGRES_USER')
     database_pw = os.getenv('POSTGRES_PW')
@@ -18,6 +19,7 @@ def database_config():
 
 
 def email_config(app):
+    """configuration of the mail services"""
     # Setup Flask mail
     mail_use_ssl = os.getenv('MAIL_USE_SSL')
     try:

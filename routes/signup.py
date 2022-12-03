@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash
 
 from utils.forms import RegisterForm
 from utils.constants import YEAR, SITE_NAME
+from utils.helper import password_check
 from utils.models.auth_manager import AuthManager
 
 signup_route = Blueprint('signup', __name__, template_folder='routes')
@@ -17,6 +18,10 @@ def signup():
         # TODO add the errors messages to the register form
         if form.validate_on_submit():
             # TODO complete when database is ready
+            if password_check(form.password.data):
+                return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
+                                       pass_check=password_check(form.password.data), messages="",
+                                       current_user=current_user)
             if form.password.data == form.confirm_password.data:
                 hashed_password = generate_password_hash(
                     form.password.data,

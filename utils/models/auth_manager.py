@@ -1,16 +1,15 @@
 import uuid
-import os
-import jwt
 
 from sqlalchemy.exc import IntegrityError
-from flask_login import UserMixin
+from sqlalchemy import cast, String
+from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash
 
 from database.db import db
 from database.models.user import UserProfile
 from database.models.password import UserPassword
 
-from utils.helper import register_input_handler, get_reset_token
+from utils.helper import register_input_handler
 from utils.email import send_change_password_email
 
 
@@ -75,14 +74,30 @@ class AuthManager(UserMixin):
         }
 
     def forgot_psw(self):
+        """Send an email to the user or throw an error"""
         try:
+            # check the presence of the user in the database
             user = UserProfile.query.filter_by(email=self.user_data).first()
             if not user:
                 raise ValueError('No user found check you email or register a new account')
-            # token = get_reset_token(user)
-            # username = jwt.decode(token,
-            #                       key=os.getenv('SECRET_KEY'), algorithms=["HS256"])
+            # send the email with the link for the change password route
             send_change_password_email(user)
 
         except ValueError as e:
             return e
+
+    def change_password(self):
+        try:
+            print("33333 = ", self.user_data["user_id"])
+            # check the presence of the user
+            user_password = UserPassword.query.filter(
+                cast(UserPassword.user_id, String) == str(self.user_data['user_id'])).first()
+            if user_password:
+                user_password.password = self.user_data['password']
+                db.session.commit()
+                user = UserProfile.query.filter(
+                    cast(UserProfile.user_profile_id, String) == str(user_password.user_id)).first()
+                login_user(user)
+                return True
+        except IntegrityError:
+            return False
