@@ -11,7 +11,6 @@ from database.models.user import UserProfile
 from utils.email import mail
 from utils.config import database_config, email_config
 
-
 def create_app():
     migrate = Migrate()
 
@@ -45,3 +44,4 @@ def create_app():
         return UserProfile.query.get(int(user_id))
 
     return app
+
