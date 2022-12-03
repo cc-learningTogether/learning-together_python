@@ -1,4 +1,4 @@
-# This setting is for connecting Github
+#settings for connecting Github
 git config --global user.email '<your setting>'
 git config --global user.name '<Your setting>'
 
