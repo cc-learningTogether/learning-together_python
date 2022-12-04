@@ -1,4 +1,5 @@
-#settings for connecting Github
+#Excute the commands below in your terminal. Those are settings for connecting Github
+
 git config --global user.email '<your setting>'
 git config --global user.name '<Your setting>'
 
