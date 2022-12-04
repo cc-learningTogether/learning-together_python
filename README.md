@@ -9,6 +9,7 @@
 - Docker 
 - Fly.io
 
+
 ## How to start 
 
 Prerequisite - Installing Python, docker and docker-compose
