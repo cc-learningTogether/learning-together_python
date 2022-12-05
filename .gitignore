@@ -1,6 +1,8 @@
 .venv
 .dockerignore
 .env
+.env.bk
 .idea
 __pycache__
 .DS_Store
+postCreateCommand.sh
