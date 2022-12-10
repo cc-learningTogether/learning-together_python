@@ -4,15 +4,17 @@
 		<div class="btn-group">
 			<button class="menu-button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
 			        data-bs-toggle="dropdown" aria-expanded="false">
-				<i class="fas fa-bars"></i>
+				<i class="fas fa-bars fa-lg"></i>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item text-capitalize" href="#">setting</a></li>
-				<li><a class="dropdown-item" href="#">Appointment</a></li>
+				<li><a class="dropdown-item text-capitalize" href="{{url_for('settings.settings')}}"><i
+						class="fas fa-cogs"></i> Setting</a></li>
+				<li><a class="dropdown-item" href="#"><i class="fas fa-calendar-check"></i> Appointment</a></li>
 				<li>
 					<hr class="dropdown-divider">
 				</li>
-				<li><a class="dropdown-item" href="{{url_for('logout.logout') }}">Logout</a></li>
+				<li><a class="dropdown-item" href="{{url_for('logout.logout')}}"><i class="fas fa-sign-out-alt"></i>
+					Logout</a></li>
 			</ul>
 		</div>
 		{% endif %}
