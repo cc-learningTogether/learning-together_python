@@ -14,6 +14,10 @@ services:
       services-network:
         aliases:
           - db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      retries: 5
   web:
     container_name: ltw
     #if you need to build the image, uncomment the next line. 
@@ -21,7 +25,8 @@ services:
     #if the image is not necessary to build, comment it out. Image will be pull from the repository. 
     # image: ghcr.io/miku0129/docker-ltw/ltw/v2:latest
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - '127.0.0.1:8000:8080'
     environment:
