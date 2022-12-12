@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, redirect, url_for
 from flask_login import logout_user, current_user
 from jinja2 import TemplateNotFound
 
@@ -11,6 +11,6 @@ logout_route = Blueprint('logout', __name__, template_folder="routes")
 def logout():
     try:
         logout_user()
-        return render_template('index.html', year=YEAR, current_user=current_user)
+        return redirect(url_for("home.home"))
     except TemplateNotFound:
         return abort(404)

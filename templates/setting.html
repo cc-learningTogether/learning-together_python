@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/styles.css') }}" type="text/css">
 	{% endblock %}
 
-	<title>Learning Together Change Password</title>
+	<title>Learning Together Settings</title>
 	{% endblock %}
 </head>
 <body>
@@ -32,26 +32,19 @@
 {% endblock %}
 <div class="d-flex flex-column align-items-center mt-5">
 	<div class="card w-50 d-flex flex-column align-items-center shadow">
-		<h1 class="mt-5 text-center text-capitalize"> Change Password </h1>
-		<form class="row g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
-			{{form.hidden_tag()}}
-			{%if pass_check :%}
-			<div class="col-12 d-flex justify-content-center align-items-center">
-				<p class="text-danger mb-0">{{pass_check}}</p>
-			</div>
-			{%endif%}
+		<h1 class="mt-5 text-center text-capitalize"><i
+				class="fas fa-cogs"></i> User Settings </h1>
+		<div class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
+
 			<div class="col-12 form-group d-flex flex-column">
-				{{ form.password(class_="form-control", size=50) }}
+
+				<p class="text-danger">{{user.user_name}}</p>
 			</div>
-			<div class="col-12 form-group d-flex flex-column">
-				{{ form.confirm_password(class_="form-control", size=50) }}
-			</div>
-			<div class="col-12 d-flex align-items-center justify-content-center">
-				{{ form.submit_change_password(class_= "form-control") }}
-			</div>
-		</form>
+
+		</div>
 	</div>
-	<a class="m-3" href="{{url_for('home.home')}}">Home</a>
+	<a class="mt-2" href="{{url_for('home.home')}}">Home</a>
+
 </div>
 {% block Footer %}
 {% include "components/footer.html" %}
