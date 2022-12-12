@@ -17,9 +17,9 @@ services:
   web:
     container_name: ltw
     #if you need to build the image, uncomment the next line. 
-    # build: .  
+    build: .  
     #if the image is not necessary to build, comment it out. Image will be pull from the repository. 
-    image: ghcr.io/miku0129/docker-ltw/ltw/v2:latest
+    # image: ghcr.io/miku0129/docker-ltw/ltw/v2:latest
     depends_on:
       - db
     ports:
