@@ -18,7 +18,7 @@ def forgot_password():
             if error:
                 return render_template("forgot_password.html", message=error, name=SITE_NAME, form=form_send_email,
                                        year=YEAR)
-            return render_template("forgot_password.html", message=f"An email as been sent at {email}", name=SITE_NAME,
+            return render_template("forgot_password.html", message=f"An email has been sent at {email}", name=SITE_NAME,
                                    form=form_send_email, year=YEAR)
         return render_template("forgot_password.html", message="", name=SITE_NAME, form=form_send_email, year=YEAR)
     except TemplateNotFound:
