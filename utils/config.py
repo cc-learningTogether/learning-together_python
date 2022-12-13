@@ -1,4 +1,3 @@
-import distutils
 import os
 
 
@@ -21,17 +20,8 @@ def database_config():
 def email_config(app):
     """configuration of the mail services"""
     # Setup Flask mail
-    mail_use_ssl = os.getenv('MAIL_USE_SSL')
-    try:
-        if distutils.util.strtobool(os.getenv('MAIL_USE_SSL')) == 0:
-            mail_use_ssl = False
-        elif distutils.util.strtobool(os.getenv('MAIL_USE_SSL')) == 1:
-            mail_use_ssl = True
-    except ValueError:
-        print("MAIL_USE_SSL value must be True or False")
-
     app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
     app.config['MAIL_PORT'] = os.getenv('MAIL_PORT')
-    app.config['MAIL_USE_SSL'] = mail_use_ssl
+    app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')

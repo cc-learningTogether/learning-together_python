@@ -87,7 +87,6 @@ class AuthManager(UserMixin):
 
     def change_password(self):
         try:
-            print("33333 = ", self.user_data["user_id"])
             # check the presence of the user
             user_password = UserPassword.query.filter(
                 cast(UserPassword.user_id, String) == str(self.user_data['user_id'])).first()

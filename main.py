@@ -12,7 +12,7 @@ load_dotenv()
 # create the application
 app = create_app()
 
-# Register the blueprint (routes)
+# initialize the router
 
 initialize_routes(app)
 
