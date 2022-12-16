@@ -1,10 +1,11 @@
 .venv
-.dockerignore
 .env
 .env.bk
 .idea
 __pycache__
 .DS_Store
 migrations
-.env_for_local
-.env_for_docker
+.env_for_local.txt
+.env_for_docker.txt
+.env_for_fly.txt
+.dockerignore
