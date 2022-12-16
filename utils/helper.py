@@ -1,4 +1,6 @@
 import os
+from typing import Tuple
+
 import jwt
 
 from datetime import datetime, timedelta, timezone
@@ -28,6 +30,32 @@ def register_input_handler(data):
         return False
     if data == 'Yes/はい':
         return True
+
+
+def favorite_language(val: int) -> Tuple[int, str]:
+    """take the value saved in the database and converted it in the correspondent value"""
+    if val == -1:
+        return 0, "-"
+    elif val == 0:
+        return 1, 'English/英語'
+    elif val == 1:
+        return 2, 'Japanese/日本語'
+
+
+def set_gender(val: int) -> Tuple[int, str]:
+    """take the value saved in the database and converted it in the correspondent value"""
+    if val == -1:
+        return 0, "-"
+    elif val == 0:
+        return 1, 'Male/男'
+    elif val == 1:
+        return 2, 'Female/女'
+
+
+def set_is_supporter(val: bool) -> str:
+    if val:
+        return 'Yes/はい'
+    return 'No/いいえ'
 
 
 def get_reset_token(user):
