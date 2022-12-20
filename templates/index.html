@@ -24,16 +24,20 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/styles.css') }}" type="text/css">
 	{% endblock %}
 
-	<!-- Date-picker -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-	<script>
-		$(function () {
-			$("#datepicker").datepicker();
-		});
+	<!-- jQuery CDN -->
+	<script src=
+	"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 	</script>
+	<!-- CSS CDN -->
+	<link rel="stylesheet"
+	href=
+	"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+	/>
+	<!-- datetimepicker jQuery CDN -->
+	<script src=
+	"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+	</script>
+
 
 	<title>Learning Together</title>
 
