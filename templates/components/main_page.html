@@ -6,12 +6,14 @@
 
 <!-- datepicker -->
 <form method="post" action="">
-  {{ form.hidden_tag() }} 
-  {{ form.dt(class="dtpick") }}
+  {{ form_start.hidden_tag() }} 
+  {{ form_start.dt_start(class="dtpick") }}
+  {{ form_finish.hidden_tag() }} 
+  {{ form_finish.dt_finish(class="dtpick") }}
   <button type="submit">Go</button>
 </form>
 
-
-<p> {{result}} </p>
-<p> {{result_type}} </p>
-
+{% if date_start :%}
+<p> From {{date_start}} to {{date_finish}}</p>
+<p> {{date_start_type}} </p>
+{% endif %}
