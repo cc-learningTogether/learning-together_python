@@ -24,20 +24,15 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/styles.css') }}" type="text/css">
 	{% endblock %}
 
-	<!-- jQuery CDN -->
-	<script src=
-	"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+	<script src="//code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$( ".dtpick" ).datepicker();
+		});
 	</script>
-	<!-- CSS CDN -->
-	<link rel="stylesheet"
-	href=
-	"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
-	/>
-	<!-- datetimepicker jQuery CDN -->
-	<script src=
-	"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
-	</script>
-
+	
 
 	<title>Learning Together</title>
 

@@ -4,19 +4,14 @@
   <li>List the request for appointment</li>
 </ul>
 
-<h1 style="color: violet">Open a slot in the calender</h1>
-
-<form action="/" method="POST">
-  <input type="text" class="datetimepicker" name="start" />
-  <input type="text" class="datetimepicker" name="end" />
-  <script type="text/javascript">
-    $(".datetimepicker").each(function () {
-      $(this).datetimepicker();
-    });
-  </script>
-  <input type="submit" value="submit" />
+<!-- datepicker -->
+<form method="post" action="">
+  {{ form.hidden_tag() }} 
+  {{ form.dt(class="dtpick") }}
+  <button type="submit">Go</button>
 </form>
 
-{% if start :%}
-<h2>From {{start}} to {{end}}</h2>
-{% endif %}
+
+<p> {{result}} </p>
+<p> {{result_type}} </p>
+
