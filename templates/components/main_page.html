@@ -10,10 +10,12 @@
   {{ form_start.dt_start(class="dtpick") }}
   {{ form_finish.hidden_tag() }} 
   {{ form_finish.dt_finish(class="dtpick") }}
-  <button type="submit">Go</button>
+  <button type="submit">submit</button>
 </form>
 
-{% if date_start :%}
+{% if message :%}
 <p> From {{date_start}} to {{date_finish}}</p>
-<p> {{date_start_type}} </p>
+<p> {{message}} </p>
 {% endif %}
+
+
