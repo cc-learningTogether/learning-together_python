@@ -40,11 +40,10 @@ def home():
     dtf_start = DateTimeForm_start()
     dtf_finish = DateTimeForm_finish()
     
-    #query all user's slots 
-    open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
-
-
     if request.method == 'POST':
+        #query user's slots 
+        open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
+
         if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
             dt_start_val= request.form['dt_start']
             dt_finish_val = request.form['dt_finish']
@@ -62,7 +61,7 @@ def home():
                     opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
                     db.session.add(opening_slot)
                     db.session.commit()
-                    ## todo: initialize datepicker
+                    ## todo: initialize input 
                     return render_template('index.html', year=YEAR, name=SITE_NAME, 
                     form_start=dtf_start, form_finish=dtf_finish, 
                     date_start=dt_start_val, date_finish=dt_finish_val, message="Success", op_slot=open_slot)
@@ -74,7 +73,8 @@ def home():
     else:
         try:
             if current_user.is_authenticated:
-
+                #query user's slots 
+                open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
                 return render_template('index.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish, op_slot=open_slot)
             return render_template('index.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish)
         except TemplateNotFound: return abort(404)
