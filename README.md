@@ -48,6 +48,7 @@ Prerequisite - Install Python, docker and docker-compose to your machine. Instal
       # ! Import the database model under here
       from database.models.user import UserProfile
       from database.models.password import UserPassword
+      from database.models.schedule_datetime import ScheduleDatetime
       ```
    3. Excute `flask db migrate -m 'initial migration'` under `/app`. 
    4. Excute `flask db upgrade'` under `/app`. 
