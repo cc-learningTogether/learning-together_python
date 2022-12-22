@@ -39,6 +39,10 @@ class DateTimeForm_finish(FlaskForm):
 def home():
     dtf_start = DateTimeForm_start()
     dtf_finish = DateTimeForm_finish()
+    
+    #query all user's slots 
+    open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
+
 
     if request.method == 'POST':
         if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
@@ -55,20 +59,22 @@ def home():
             try:
                 if current_user.is_authenticated:
                     #insert data into db
-                    book = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
-                    db.session.add(book)
+                    opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
+                    db.session.add(opening_slot)
                     db.session.commit()
+                    ## todo: initialize datepicker
                     return render_template('index.html', year=YEAR, name=SITE_NAME, 
                     form_start=dtf_start, form_finish=dtf_finish, 
-                    date_start=dt_start_val, date_finish=dt_finish_val, message="Success")
+                    date_start=dt_start_val, date_finish=dt_finish_val, message="Success", op_slot=open_slot)
             except TemplateNotFound: return abort(404)
 
-
-        return render_template('index.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+        return render_template('index.html', year=YEAR, 
+        form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
 
     else:
         try:
             if current_user.is_authenticated:
-                return render_template('index.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish)
+
+                return render_template('index.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish, op_slot=open_slot)
             return render_template('index.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish)
         except TemplateNotFound: return abort(404)

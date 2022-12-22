@@ -1,10 +1,19 @@
-<h1>To Do</h1>
+<h3>To Do</h3>
 <ul>
   <li>List the appointment</li>
   <li>List the request for appointment</li>
 </ul>
 
+{% if op_slot :%}
+<h3>Your open-slot</h3>
+{% for item in op_slot %}
+<li>From {{item.start_at}} to {{item.finish_at}} / with {{ item.user_booking_slot }}</li>
+{% endfor %}
+{% endif %}
+
+
 <!-- datepicker -->
+<h3>Open your slot</h3>
 <form method="post" action="">
   {{ form_start.hidden_tag() }} 
   {{ form_start.dt_start(class="dtpick") }}
@@ -14,7 +23,6 @@
 </form>
 
 {% if message :%}
-<br>
 <p> From {{date_start}} to {{date_finish}}</p>
 <p> {{message}} </p>
 {% endif %}
