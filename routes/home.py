@@ -60,7 +60,7 @@ def home():
                     db.session.commit()
                     return render_template('index.html', year=YEAR, name=SITE_NAME, 
                     form_start=dtf_start, form_finish=dtf_finish, 
-                    date_start=dt_start_val, date_finish=dt_finish_val, message=current_user.id)
+                    date_start=dt_start_val, date_finish=dt_finish_val, message="Success")
             except TemplateNotFound: return abort(404)
 
 
