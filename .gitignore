@@ -1,5 +1,4 @@
 .venv
-.dockerignore
 .env
 .env.bk
 .idea
@@ -9,3 +8,4 @@ migrations
 .env_for_local.txt
 .env_for_docker.txt
 .env_for_fly.txt
+.dockerignore

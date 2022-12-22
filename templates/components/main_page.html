@@ -1,6 +1,21 @@
-<h1>To Do </h1>
+<h1>To Do</h1>
 <ul>
-	<li>List the appointment</li>
-	<li>List the request for appointment</li>
-	<li>create a calendar</li>
+  <li>List the appointment</li>
+  <li>List the request for appointment</li>
 </ul>
+
+<!-- datepicker -->
+<form method="post" action="">
+  {{ form_start.hidden_tag() }} 
+  {{ form_start.dt_start(class="dtpick") }}
+  {{ form_finish.hidden_tag() }} 
+  {{ form_finish.dt_finish(class="dtpick") }}
+  <button type="submit">submit</button>
+</form>
+
+{% if message :%}
+<p> From {{date_start}} to {{date_finish}}</p>
+<p> {{message}} </p>
+{% endif %}
+
+
