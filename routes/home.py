@@ -8,6 +8,9 @@ from wtforms import StringField, ValidationError
 from wtforms.validators import DataRequired
 from datetime import datetime
 
+from database.db import db
+from database.models.schedule_datetime import ScheduleDatetime
+
 
 home_route = Blueprint('home', __name__, template_folder="routes")
 
@@ -32,7 +35,6 @@ class DateTimeForm_finish(FlaskForm):
             raise ValidationError("Chose later than today")
 
 
-
 @home_route.route('/', methods=['GET', 'POST'])
 def home():
     dtf_start = DateTimeForm_start()
@@ -52,9 +54,13 @@ def home():
 
             try:
                 if current_user.is_authenticated:
+                    #insert data into db
+                    book = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
+                    db.session.add(book)
+                    db.session.commit()
                     return render_template('index.html', year=YEAR, name=SITE_NAME, 
                     form_start=dtf_start, form_finish=dtf_finish, 
-                    date_start=dt_start_val, date_finish=dt_finish_val, message="Success")
+                    date_start=dt_start_val, date_finish=dt_finish_val, message=current_user.id)
             except TemplateNotFound: return abort(404)
 
 
