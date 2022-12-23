@@ -7,7 +7,7 @@
 {% if op_slot :%}
 <h3>Your open-slot</h3>
 {% for item in op_slot %}
-<li>From {{item.start_at}} to {{item.finish_at}} / with {{ item.user_booking_slot }}</li>
+<li>From {{item.start_at}} to {{item.finish_at}} / with {{ item.user_booking_slot }}<i class="fas fa-trash" id='slot_{{loop.index}}' onclick="deleteSlot('slot_{{loop.index}}')"></i></li>
 {% endfor %}
 {% endif %}
 

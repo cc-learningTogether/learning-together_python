@@ -44,6 +44,9 @@ def home():
         #query user's slots 
         open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
 
+        
+
+        #for open slot 
         if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
             dt_start_val= request.form['dt_start']
             dt_finish_val = request.form['dt_finish']
