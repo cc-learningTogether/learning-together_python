@@ -5,6 +5,8 @@ from routes.logout import logout_route
 from routes.forgot_password import forgot_password_route
 from routes.change_password import change_psw_route
 from routes.settings import settings_route
+from routes.create_slot import create_slot_route
+
 
 
 def initialize_routes(app):
@@ -21,3 +23,5 @@ def initialize_routes(app):
     app.register_blueprint(change_psw_route)
 
     app.register_blueprint(settings_route)
+
+    app.register_blueprint(create_slot_route)

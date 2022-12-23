@@ -41,43 +41,57 @@ def home():
     dtf_finish = DateTimeForm_finish()
     
     if request.method == 'POST':
+
+        #for delete slot 
+        slot_id = request.form["val"]
+        found_slot = db.session.query(ScheduleDatetime).filter_by(id=slot_id).first()
+        db.session.delete(found_slot)
+        db.session.commit()
+
         #query user's slots 
         open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
 
-        
+        return render_template('index.html', year=YEAR, name=SITE_NAME, op_slot=open_slot) 
 
         #for open slot 
-        if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
-            dt_start_val= request.form['dt_start']
-            dt_finish_val = request.form['dt_finish']
+        # if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
+        #     dt_start_val= request.form['dt_start']
+        #     dt_finish_val = request.form['dt_finish']
 
             #validate two inputs
-            first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
-            second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
-            if ( second - first ).total_seconds() < 0 :
-                return render_template('index.html', year=YEAR, 
-                form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+            # first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
+            # second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
+            # if ( second - first ).total_seconds() < 0 :
+            #     return render_template('index.html', year=YEAR, 
+            #     form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
 
-            try:
-                if current_user.is_authenticated:
-                    #insert data into db
-                    opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
-                    db.session.add(opening_slot)
-                    db.session.commit()
-                    ## todo: initialize input 
-                    return render_template('index.html', year=YEAR, name=SITE_NAME, 
-                    form_start=dtf_start, form_finish=dtf_finish, 
-                    date_start=dt_start_val, date_finish=dt_finish_val, message="Success", op_slot=open_slot)
-            except TemplateNotFound: return abort(404)
+            # try:
+            #     if current_user.is_authenticated:
+            #         #insert data into db
+            #         opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
+            #         db.session.add(opening_slot)
+            #         db.session.commit()
+            #         ## todo: initialize input 
+            #         return render_template('index.html', year=YEAR, name=SITE_NAME, 
+            #         form_start=dtf_start, form_finish=dtf_finish, 
+            #         date_start=dt_start_val, date_finish=dt_finish_val, message="Success", op_slot=open_slot)
+            # except TemplateNotFound: return abort(404)
 
-        return render_template('index.html', year=YEAR, 
-        form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+        # return render_template('index.html', year=YEAR, 
+        # form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+
 
     else:
         try:
             if current_user.is_authenticated:
                 #query user's slots 
                 open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
-                return render_template('index.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish, op_slot=open_slot)
-            return render_template('index.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish)
+                return render_template('index.html', year=YEAR, name=SITE_NAME, op_slot=open_slot)
+                return render_template('index.html', year=YEAR)
+
+            # if current_user.is_authenticated:
+            #     #query user's slots 
+            #     open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
+            #     return render_template('index.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish, op_slot=open_slot)
+            # return render_template('index.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish)
         except TemplateNotFound: return abort(404)
