@@ -12,8 +12,7 @@ from database.db import db
 from database.models.schedule_datetime import ScheduleDatetime
 
 
-scheduling_datetime_route = Blueprint('scheduling_datetime', __name__, template_folder="routes")
-
+search_route = Blueprint('search', __name__, template_folder="routes")
 
 class DateTimeForm_start(FlaskForm):
     dt_start = StringField("datetime_start", validators=[DataRequired()])
@@ -35,14 +34,15 @@ class DateTimeForm_finish(FlaskForm):
             raise ValidationError("Chose later than today")
 
 
-@scheduling_datetime_route.route('/scheduling_datetime', methods=['GET', 'POST'])
-def scheduling_datetime():
+@search_route.route('/search', methods=['GET', 'POST'])
+def search():    
     dtf_start = DateTimeForm_start()
     dtf_finish = DateTimeForm_finish()
     
     if request.method == 'POST':
         try:
             if current_user.is_authenticated:
+
                 #to make a schedule
                 if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
                     dt_start_val= request.form['dt_start']
@@ -56,13 +56,13 @@ def scheduling_datetime():
                         form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
                     try:
                         #insert data into db
-                        opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
-                        db.session.add(opening_slot)
-                        db.session.commit()
+                        # opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
+                        # db.session.add(opening_slot)
+                        # db.session.commit()
                         ## todo: initialize input 
                         return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, 
                         form_start=dtf_start, form_finish=dtf_finish, 
-                        date_start=dt_start_val, date_finish=dt_finish_val, message="Success")
+                        date_start=dt_start_val, date_finish=dt_finish_val, message="Result")
                     except TemplateNotFound: return abort(404)
                 return render_template('scheduling_datetime.html', year=YEAR, 
                 form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
@@ -70,6 +70,8 @@ def scheduling_datetime():
     else:
         try:
             if current_user.is_authenticated:
+                #query user's slots 
+                open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
                 return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish)
             return render_template('scheduling_datetime.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish)
         except TemplateNotFound: return abort(404)

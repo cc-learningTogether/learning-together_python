@@ -6,6 +6,7 @@ from routes.forgot_password import forgot_password_route
 from routes.change_password import change_psw_route
 from routes.settings import settings_route
 from routes.scheduling_datetime import scheduling_datetime_route
+from routes.search import search_route
 
 
 def initialize_routes(app):
@@ -24,3 +25,5 @@ def initialize_routes(app):
     app.register_blueprint(settings_route)
 
     app.register_blueprint(scheduling_datetime_route)
+
+    app.register_blueprint(search_route)
