@@ -1,0 +1,17 @@
+
+<!-- datepicker -->
+<h3>Open your slot</h3>
+<form method="post" action="">
+  {{ form_start.hidden_tag() }} 
+  {{ form_start.dt_start(class="dtpick") }}
+  {{ form_finish.hidden_tag() }} 
+  {{ form_finish.dt_finish(class="dtpick") }}
+  <button type="submit">submit</button>
+</form>
+
+{% if message :%}
+<p> From {{date_start}} to {{date_finish}}</p>
+<p> {{message}} </p>
+{% endif %}
+
+

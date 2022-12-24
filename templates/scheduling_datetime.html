@@ -53,18 +53,12 @@
   </head>
 
   <body>
-    {% block Header %} 
+  {% block Header %} 
 	{% include "components/header.html" %} 
 	{% endblock %} 
-	{%if not current_user.is_authenticated :%} 
-	{% block home_page %} 
-	{% include "components/home_page.html" %} 
+	{% block datetimepicker %} 
+	{% include "components/datetimepicker.html" %} 
 	{% endblock %} 
-	{% else: %} 
-	{% block main_page_copy %} 
-	{% include "components/main_page_copy.html" %} 
-	{% endblock %} 
-	{% endif %} 
 	{% block Footer %} 
 	{% include "components/footer.html" %} 
 	{% endblock %}
@@ -74,29 +68,6 @@
 		$(".dtpick").each(function () {
 		  $(this).datetimepicker();
 		});
-
-    //to delete slot
-    function deleteSlot(slotId){
-      console.log("click!", slotId)
-      let url = ""; 
-      $.ajax({
-        url: "/", 
-        data: {val: slotId},
-        type: "POST",
-        dataType: "json",
-        success: function(data){
-          response = data; 
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-          console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
-        }
-      });
-      (function(){ 
-        window.alert("Done");
-        window.location.reload();
-      }())
-    }
-
 	  </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
