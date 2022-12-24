@@ -54,7 +54,7 @@ nav{
     height: 3rem;
 }
 
-home-link{
+.home-link{
       text-decoration:none;
 }
 
@@ -87,4 +87,15 @@ home-link{
 
 .btn-link{
     color: #6200ea;
+}
+
+
+.form-reset{
+    text-decoration: none;
+    color: white;
+}
+
+
+.form-reset:hover{
+    color: white;
 }

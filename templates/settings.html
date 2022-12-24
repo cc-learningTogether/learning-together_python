@@ -37,6 +37,11 @@
 		<div class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-start align-items-center">
 			<!--Username-->
 			<div class="container-fluid row">
+				<div class="text-center">
+					{% if username_error: %}
+					<p class="text-danger">{{ username_error }}</p>
+					{% endif %}
+				</div>
 				<div class="col-8">
 					<p><b class="text-capitalize">username: </b> <em>{{user.user_name}}</em></p>
 				</div>
@@ -47,31 +52,39 @@
 				</div>
 
 				<!--Username Modal -->
-				<div class="modal fade" id="usernameUpdate" tabindex="-1" aria-labelledby="usernameUpdateLabel"
+				<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="usernameUpdate"
+				     tabindex="-1" aria-labelledby="usernameUpdateLabel"
 				     aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="usernameUpdateLabel">Update username</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
+								<h5 class="modal-title text-capitalize" id="usernameUpdateLabel">Update username</h5>
 							</div>
-							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+							<div class="modal-body mb-0">
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
 									{{form.hidden_tag()}}
-									{{ form.username(class_="form-control", size=50) }}
+									<div class="col-8 mb-3">
+										{{ username_form.username(class_="form-control", size=50) }}
+									</div>
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ username_form.submit(class_= "form-control") }}
+									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="container-fluid row">
+				<div class="text-center">
+					{% if username_error: %}
+					<p class="text-danger">{{ email_error }}</p>
+					{% endif %}
+				</div>
 				<div class="col-8">
 					<p><b class="text-capitalize">email: </b><em>{{user.email}}</em></p>
 				</div>
@@ -88,18 +101,17 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="emailUpdateLabel">Update username</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{form.hidden_tag()}}
-									{{ form.email(class_="form-control", size=50) }}
+									{{email_form.hidden_tag()}}
+									{{ email_form.email(class_="form-control", size=50) }}
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
 								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
@@ -116,15 +128,13 @@
 					</button>
 				</div>
 
-				<!--Email Modal -->
+				<!--Language Modal -->
 				<div class="modal fade" id="languageUpdate" tabindex="-1" aria-labelledby="emailUpdateLabel"
 				     aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="languageUpdateLabel">Update Language</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
@@ -134,7 +144,8 @@
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
 								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
@@ -158,8 +169,6 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="genderUpdateLabel">Update Gender</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
@@ -169,7 +178,8 @@
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
 								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
@@ -194,8 +204,6 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="isSupporterUpdateLabel">Update Supporter Status</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
@@ -205,7 +213,9 @@
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-secondary " data-bs-dismiss="modal"
+								><a class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+								</button>
 								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
@@ -228,8 +238,6 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="passwordUpdateLabel">Update Gender</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-								        aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
@@ -244,7 +252,8 @@
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
 								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>

@@ -56,3 +56,38 @@ class UserSettingForm(FlaskForm):
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit = SubmitField("Update")
+
+
+class ChangeUsernameForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "New Username"})
+    submit = SubmitField("Update")
+
+
+class ChangeEmailForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "New Email"})
+    submit = SubmitField("Update")
+
+
+class ChangePasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    submit = SubmitField("Update")
+
+
+class ChangeGenderForm(FlaskForm):
+    gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
+    submit = SubmitField("Update")
+
+
+class ChangeLanguageForm(FlaskForm):
+    language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
+    submit = SubmitField("Update")
+
+
+class ChangeSupporterStatusForm(FlaskForm):
+    is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
+    submit = SubmitField("Update")
+
+
+
