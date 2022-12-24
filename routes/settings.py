@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
 from utils.constants import YEAR, SITE_NAME
-from utils.forms import ChangeUsernameForm, UserSettingForm, ChangeEmailForm
+from utils.forms import ChangeUsernameForm, UserSettingForm, ChangeEmailForm, ChangeLanguageForm, ChangeGenderForm
 from utils.helper import favorite_language, set_gender, set_is_supporter
 from utils.models.user_setting import UserSettings
 
@@ -23,6 +23,9 @@ def settings():
             # initialize the form
             username_form = ChangeUsernameForm()
             email_form = ChangeEmailForm()
+            language_form = ChangeLanguageForm()
+            gender_form = ChangeGenderForm()
+            # * Set new username
             if username_form.validate_on_submit():
                 form_data = username_form.username.data
                 username_message = UserSettings(form_data).change_username()
@@ -34,11 +37,14 @@ def settings():
                                            form=form,
                                            username_error=username_message,
                                            username_form=username_form,
+                                           language_form=language_form,
                                            email_form=email_form,
+                                           gender_form=gender_form,
                                            email_error="",
                                            name=SITE_NAME,
                                            year=YEAR)
                 return redirect(url_for("settings.settings"))
+            # * Set new email
             if email_form.validate_on_submit():
                 form_data = email_form.email.data
                 email_error = UserSettings(form_data).change_email()
@@ -51,19 +57,30 @@ def settings():
                                            username_error="",
                                            username_form=username_form,
                                            email_form=email_form,
+                                           language_form=language_form,
+                                           gender_form=gender_form,
                                            email_error=email_error,
                                            name=SITE_NAME,
                                            year=YEAR)
                 return redirect(url_for("settings.settings"))
-            # TODO split the form
-            # form.process()
+            # * Set new language
+            if language_form.validate_on_submit():
+                form_data = language_form.language.data
+                UserSettings(form_data).set_language()
+                return redirect(url_for("settings.settings"))
+            if gender_form.validate_on_submit():
+                form_data = gender_form.gender.data
+                UserSettings(form_data).set_gender()
+                return redirect(url_for("settings.settings"))
 
             return render_template("settings.html", user=current_user, language=language[1], supporter=supporter,
                                    gender=gender[1],
                                    error="",
                                    form=form,
+                                   language_form=language_form,
                                    email_form=email_form,
                                    username_form=username_form,
+                                   gender_form=gender_form,
                                    name=SITE_NAME,
                                    year=YEAR)
         return abort(403)

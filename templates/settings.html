@@ -140,16 +140,19 @@
 								<h5 class="modal-title" id="languageUpdateLabel">Update Language</h5>
 							</div>
 							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{ form.hidden_tag() }}
-									{{ form.language(class_="form-select") }}
+									<div class="col-8 mb-3">
+										{{ language_form.hidden_tag() }}
+										{{ language_form.language(class_="form-select") }}
+									</div>
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ language_form.submit(class_= "form-control") }}
+									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
-										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>
@@ -174,16 +177,19 @@
 								<h5 class="modal-title" id="genderUpdateLabel">Update Gender</h5>
 							</div>
 							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{ form.hidden_tag() }}
-									{{ form.gender(class_="form-select") }}
+									<div class="col-8 mb-3">
+										{{ gender_form.hidden_tag() }}
+										{{ gender_form.gender(class_="form-select") }}
+									</div>
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ gender_form.submit(class_= "form-control") }}
+									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
-										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>

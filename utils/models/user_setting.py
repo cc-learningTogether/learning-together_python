@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from database.db import db
 from database.models.user import UserProfile
+from utils.helper import register_input_handler
 
 
 class UserSettings:
@@ -34,3 +35,29 @@ class UserSettings:
         except IntegrityError:
             db.session.rollback()
             return "Email already used!"
+
+    def set_language(self):
+        try:
+            user = UserProfile.query.filter(
+                cast(UserProfile.user_profile_id, String) == str(current_user.user_profile_id)).first()
+            if user and user.main_language != self.data:
+                user.main_language = register_input_handler(self.data)
+                db.session.commit()
+                return redirect(url_for("settings.settings"))
+            if not user:
+                raise ValueError('You are not logged in')
+        except ValueError as e:
+            return e
+
+    def set_gender(self):
+        try:
+            user = UserProfile.query.filter(
+                cast(UserProfile.user_profile_id, String) == str(current_user.user_profile_id)).first()
+            if user and user.gender != self.data:
+                user.gender = register_input_handler(self.data)
+                db.session.commit()
+                return redirect(url_for("settings.settings"))
+            if not user:
+                raise ValueError('You are not logged in')
+        except ValueError as e:
+            return e

@@ -21,7 +21,7 @@ def password_check(string):
 def register_input_handler(data):
     """take a input value from the register form and return a Integer"""
     if data == '-':
-        return
+        return -1
     if data == 'English/英語' or data == 'Male/男':
         return 0
     if data == 'Japanese/日本語' or data == 'Female/女':
