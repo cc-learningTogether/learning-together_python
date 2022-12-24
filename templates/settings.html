@@ -103,16 +103,19 @@
 								<h5 class="modal-title" id="emailUpdateLabel">Update username</h5>
 							</div>
 							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{email_form.hidden_tag()}}
-									{{ email_form.email(class_="form-control", size=50) }}
+									<div class="col-8 mb-3">
+										{{email_form.hidden_tag()}}
+										{{ email_form.email(class_="form-control", size=50) }}
+									</div>
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ email_form.submit(class_="form-control") }}
+									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
-										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>

@@ -31,7 +31,6 @@ class UserSettings:
                 user.email = self.data
                 db.session.commit()
                 return redirect(url_for("settings.settings"))
-            raise ValueError('Email already used!')
-
-        except ValueError as e:
-            return e
+        except IntegrityError:
+            db.session.rollback()
+            return "Email already used!"

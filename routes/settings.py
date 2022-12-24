@@ -16,10 +16,11 @@ def settings():
     form = UserSettingForm()
     try:
         if current_user:
+            # convert current_user value to string
             language = favorite_language(current_user.main_language)
             gender = set_gender(current_user.gender)
             supporter = set_is_supporter(current_user.is_supporter)
-
+            # initialize the form
             username_form = ChangeUsernameForm()
             email_form = ChangeEmailForm()
             if username_form.validate_on_submit():
@@ -41,19 +42,19 @@ def settings():
             if email_form.validate_on_submit():
                 form_data = email_form.email.data
                 email_error = UserSettings(form_data).change_email()
-                if email_error:
+                if type(email_error) == str:
                     return render_template("settings.html", user=current_user, language=language[1],
                                            supporter=supporter,
                                            gender=gender[1],
                                            error="",
                                            form=form,
-                                           username_error="username_message",
+                                           username_error="",
                                            username_form=username_form,
                                            email_form=email_form,
                                            email_error=email_error,
                                            name=SITE_NAME,
                                            year=YEAR)
-
+                return redirect(url_for("settings.settings"))
             # TODO split the form
             # form.process()
 
