@@ -215,23 +215,28 @@
 								<h5 class="modal-title" id="isSupporterUpdateLabel">Update Supporter Status</h5>
 							</div>
 							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{ form.hidden_tag() }}
-									{{ form.is_supporter(class_="form-select") }}
+									<div class="col-8 mb-3">
+										{{ supporter_form.hidden_tag() }}
+										{{ supporter_form.is_supporter(class_="form-select") }}
+									</div>
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary " data-bs-dismiss="modal"
+										><a class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ supporter_form.submit(class_= "form-control") }}
+									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary " data-bs-dismiss="modal"
-								><a class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
-								</button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="container-fluid row">
+				{% if pass_error %}
+				<p class="text-danger">{{pass_error}}</p>
+				{% endif %}
 				<div class="col-8">
 					<p><b class="text-capitalize">Change password </b></p>
 				</div>
@@ -249,21 +254,24 @@
 								<h5 class="modal-title" id="passwordUpdateLabel">Update Gender</h5>
 							</div>
 							<div class="modal-body">
-								<form class="g-3 mt-2 mb-4 w-75 d-flex justify-content-center align-items-center"
+								<form class="row d-flex justify-content-center align-items-center"
 								      method="post" action="">
-									{{ form.hidden_tag() }}
-									<div class="col-12 form-group d-flex flex-column">
-										{{ form.password(class_="form-control", size=50) }}
+									<div class="col-8 mb-3">
+										{{ form.hidden_tag() }}
+										<div class="col-12 mb-2 form-group d-flex flex-column">
+											{{ form.password(class_="form-control", size=50) }}
+										</div>
+										<div class="col-12 form-group d-flex flex-column">
+											{{ form.confirm_password(class_="form-control", size=50) }}
+										</div>
 									</div>
-									<div class="col-12 form-group d-flex flex-column">
-										{{ form.confirm_password(class_="form-control", size=50) }}
+									<div class="modal-footer col-12 pb-0">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
+												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
+										</button>
+										{{ form.submit(class_= "form-control") }}
 									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
-										class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a></button>
-								{{ form.submit(class_= "form-control") }}
 							</div>
 						</div>
 					</div>

@@ -1,10 +1,12 @@
 from flask import Blueprint, abort, render_template, redirect, url_for
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
+from werkzeug.security import generate_password_hash
 
 from utils.constants import YEAR, SITE_NAME
-from utils.forms import ChangeUsernameForm, UserSettingForm, ChangeEmailForm, ChangeLanguageForm, ChangeGenderForm
-from utils.helper import favorite_language, set_gender, set_is_supporter
+from utils.forms import ChangeUsernameForm, UserSettingForm, ChangeEmailForm, ChangeLanguageForm, ChangeGenderForm, \
+    ChangeSupporterStatusForm, ChangePSWForm
+from utils.helper import favorite_language, set_gender, set_is_supporter, password_check
 from utils.models.user_setting import UserSettings
 
 settings_route = Blueprint('settings', __name__, template_folder='routes')
@@ -25,6 +27,8 @@ def settings():
             email_form = ChangeEmailForm()
             language_form = ChangeLanguageForm()
             gender_form = ChangeGenderForm()
+            supporter_form = ChangeSupporterStatusForm()
+            password_form = ChangePSWForm()
             # * Set new username
             if username_form.validate_on_submit():
                 form_data = username_form.username.data
@@ -40,6 +44,7 @@ def settings():
                                            language_form=language_form,
                                            email_form=email_form,
                                            gender_form=gender_form,
+                                           supporter_form=supporter_form,
                                            email_error="",
                                            name=SITE_NAME,
                                            year=YEAR)
@@ -60,6 +65,7 @@ def settings():
                                            language_form=language_form,
                                            gender_form=gender_form,
                                            email_error=email_error,
+                                           supporter_form=supporter_form,
                                            name=SITE_NAME,
                                            year=YEAR)
                 return redirect(url_for("settings.settings"))
@@ -72,7 +78,53 @@ def settings():
                 form_data = gender_form.gender.data
                 UserSettings(form_data).set_gender()
                 return redirect(url_for("settings.settings"))
-
+            if supporter_form.validate_on_submit():
+                form_data = supporter_form.is_supporter.data
+                UserSettings(form_data).set_supporter()
+                return redirect(url_for("settings.settings"))
+            if password_form.validate_on_submit():
+                password = password_form.password.data
+                confirm_password = password_form.confirm_password.data
+                check = password_check(password)
+                if not check:
+                    if password == confirm_password:
+                        hashed_password = generate_password_hash(
+                            password,
+                            method='pbkdf2:sha256',
+                            salt_length=8
+                        )
+                        UserSettings(hashed_password).update_password()
+                        return redirect(url_for("settings.settings"))
+                    return render_template("settings.html", user=current_user, language=language[1],
+                                           supporter=supporter,
+                                           gender=gender[1],
+                                           error="",
+                                           form=form,
+                                           username_error="",
+                                           username_form=username_form,
+                                           email_form=email_form,
+                                           language_form=language_form,
+                                           gender_form=gender_form,
+                                           email_error="",
+                                           pass_error="Password doesn't match",
+                                           supporter_form=supporter_form,
+                                           name=SITE_NAME,
+                                           year=YEAR)
+                return render_template("settings.html", user=current_user, language=language[1],
+                                       supporter=supporter,
+                                       gender=gender[1],
+                                       error="",
+                                       form=form,
+                                       username_error="",
+                                       username_form=username_form,
+                                       email_form=email_form,
+                                       language_form=language_form,
+                                       gender_form=gender_form,
+                                       email_error="",
+                                       pass_error=check,
+                                       supporter_form=supporter_form,
+                                       name=SITE_NAME,
+                                       year=YEAR)
             return render_template("settings.html", user=current_user, language=language[1], supporter=supporter,
                                    gender=gender[1],
                                    error="",
@@ -81,6 +133,7 @@ def settings():
                                    email_form=email_form,
                                    username_form=username_form,
                                    gender_form=gender_form,
+                                   supporter_form=supporter_form,
                                    name=SITE_NAME,
                                    year=YEAR)
         return abort(403)

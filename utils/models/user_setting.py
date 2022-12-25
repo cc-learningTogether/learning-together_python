@@ -5,7 +5,9 @@ from sqlalchemy.exc import IntegrityError
 
 from database.db import db
 from database.models.user import UserProfile
-from utils.helper import register_input_handler
+from database.models.password import UserPassword
+from utils.helper import input_handler
+from utils.email import send_change_password_confirmation
 
 
 class UserSettings:
@@ -61,3 +63,31 @@ class UserSettings:
                 raise ValueError('You are not logged in')
         except ValueError as e:
             return e
+
+    def set_supporter(self):
+        try:
+            user = UserProfile.query.filter(
+                cast(UserProfile.user_profile_id, String) == str(current_user.user_profile_id)).first()
+            if user and user.is_supporter != self.data:
+                user.is_supporter = input_handler(self.data)
+                db.session.commit()
+                return redirect(url_for("settings.settings"))
+            if not user:
+                raise ValueError('You are not logged in')
+        except ValueError as e:
+            return e
+
+    def update_password(self):
+        try:
+            # check the presence of the user
+            user_password = UserPassword.query.filter(
+                cast(UserPassword.user_id, String) == str(current_user.user_profile_id)).first()
+            if user_password:
+                user_password.password = self.data
+                db.session.commit()
+                user = UserProfile.query.filter(
+                    cast(UserProfile.user_profile_id, String) == str(user_password.user_id)).first()
+                send_change_password_confirmation(user)
+                return True
+        except IntegrityError:
+            return False

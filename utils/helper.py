@@ -21,7 +21,7 @@ def password_check(string):
 def register_input_handler(data):
     """take a input value from the register form and return a Integer"""
     if data == '-':
-        return -1
+        return
     if data == 'English/英語' or data == 'Male/男':
         return 0
     if data == 'Japanese/日本語' or data == 'Female/女':
@@ -65,6 +65,20 @@ def get_reset_token(user):
                                        day=datetime.now().day).now(
                            tz=timezone.utc) + timedelta(seconds=5200)},
                       key=os.getenv('SECRET_KEY'))
+
+
+def input_handler(data):
+    """take a input value from the register form and return a Integer"""
+    if data == '-':
+        return -1
+    if data == 'English/英語' or data == 'Male/男':
+        return 0
+    if data == 'Japanese/日本語' or data == 'Female/女':
+        return 1
+    if data == 'No/いいえ':
+        return False
+    if data == 'Yes/はい':
+        return True
 
 
 def verify_reset_token(token):
