@@ -3,17 +3,13 @@ from flask_login import current_user
 from jinja2 import TemplateNotFound
 from utils.constants import YEAR, SITE_NAME
 
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, ValidationError
-# from wtforms.validators import DataRequired
-# from datetime import datetime
+from datetime import datetime
 from utils.forms import SearchForm, DateTimeForm_start, DateTimeForm_finish
 
 from database.db import db
 from database.models.schedule_datetime import ScheduleDatetime
 
 from utils.helper import register_input_handler
-
 
 search_route = Blueprint('search', __name__, template_folder="routes")
 
@@ -60,29 +56,27 @@ def search():
     if request.method == 'POST':
         try:
             if current_user.is_authenticated:
-                #to make a schedule
+                #validate inputs
                 if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
                     dt_start_val= request.form['dt_start']
                     dt_finish_val = request.form['dt_finish']
-
-                    #validate two inputs
-                    first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
-                    second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
-                    if ( second - first ).total_seconds() < 0 :
+                    #validate two schedule
+                    start_at = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
+                    finish_at= datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
+                    if ( finish_at- start_at ).total_seconds() < 0 :
                         return render_template('search.html', year=YEAR, 
-                        form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+                        form_start=dtf_start, form_finish=dtf_finish, form_search=form, message="Validation error")
                     try:
-                        #insert data into db
-                        # opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
-                        # db.session.add(opening_slot)
-                        # db.session.commit()
-                        ## todo: initialize input 
+                        #querying information of pair-programming partner
+                        #back all schedules if bigger than 'start_at'
+                        ret = ScheduleDatetime.query.filter(ScheduleDatetime.start_at >= start_at ).all()
+                        ## Todo: initialize input 
                         return render_template('search.html', year=YEAR, name=SITE_NAME, 
                         form_start=dtf_start, form_finish=dtf_finish, 
-                        date_start=dt_start_val, date_finish=dt_finish_val, message="Result")
+                        form_search=form, result=ret, message="Result")
                     except TemplateNotFound: return abort(404)
                 return render_template('search.html', year=YEAR, 
-                form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+                form_start=dtf_start, form_finish=dtf_finish, form_search=form, message="Validation error")
         except TemplateNotFound: return abort(404)
     else:
         try:
