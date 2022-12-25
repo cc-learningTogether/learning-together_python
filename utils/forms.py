@@ -64,13 +64,6 @@ class DateTimeForm_finish(FlaskForm):
 
 # Search Form
 class SearchForm(FlaskForm):
-
-    # username = StringField("Username", validators=[DataRequired()],
-    #                        render_kw={"placeholder": "Discord server Username"})
-    # email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
-    # password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
-    # confirm_password = PasswordField('Password', validators=[DataRequired()],
-    #                                  render_kw={"placeholder": "Confirm Password"})
     # TODO set language field to required when database is ready
     language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
     gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])

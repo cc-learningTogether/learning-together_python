@@ -87,8 +87,6 @@ def search():
     else:
         try:
             if current_user.is_authenticated:
-                #query user's slots 
-                open_slot = ScheduleDatetime.query.filter_by(user_opening_slot=current_user.id).all()
                 return render_template('search.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_finish=dtf_finish, form_search=form)
             return render_template('search.html', year=YEAR, form_start=dtf_start, form_finish=dtf_finish, form_search=form)
         except TemplateNotFound: return abort(404)
