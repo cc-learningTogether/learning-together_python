@@ -8,8 +8,9 @@ from utils.forms import SearchForm, DateTimeForm_start, DateTimeForm_finish
 
 from database.db import db
 from database.models.schedule_datetime import ScheduleDatetime
+from database.models.user import UserProfile
 
-from utils.helper import register_input_handler
+from utils.helper import search_input_handler
 
 search_route = Blueprint('search', __name__, template_folder="routes")
 
@@ -56,24 +57,27 @@ def search():
     if request.method == 'POST':
         try:
             if current_user.is_authenticated:
-                #validate inputs
+                #check each input at datetimepicker
                 if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
                     dt_start_val= request.form['dt_start']
                     dt_finish_val = request.form['dt_finish']
-                    #validate two schedule
+                    form_language_val = request.form['language']
+                    form_gender_val = request.form['gender']
+                    #check two inputs at datetimepicker 
                     start_at = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
                     finish_at= datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
                     if ( finish_at- start_at ).total_seconds() < 0 :
                         return render_template('search.html', year=YEAR, 
-                        form_start=dtf_start, form_finish=dtf_finish, form_search=form, message="Validation error")
+                        form_start=dtf_start, form_finish=dtf_finish, form_search=form, message="'Finish' should be later than 'Start'")
                     try:
-                        #querying information of pair-programming partner
-                        #back all schedules if bigger than 'start_at'
-                        ret = ScheduleDatetime.query.filter(ScheduleDatetime.start_at >= start_at ).all()
+                        #query pair-programming partner
+                        # ret = ScheduleDatetime.query
+                        # .filter(ScheduleDatetime.start_at >= start_at ).all()
+                        ret = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).all()
                         ## Todo: initialize input 
                         return render_template('search.html', year=YEAR, name=SITE_NAME, 
                         form_start=dtf_start, form_finish=dtf_finish, 
-                        form_search=form, result=ret, message="Result")
+                        form_search=form, result=ret, message=form_language_val)
                     except TemplateNotFound: return abort(404)
                 return render_template('search.html', year=YEAR, 
                 form_start=dtf_start, form_finish=dtf_finish, form_search=form, message="Validation error")
