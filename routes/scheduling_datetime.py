@@ -20,7 +20,7 @@ def scheduling_datetime():
     if request.method == 'POST':
         try:
             if current_user.is_authenticated:
-                #to make a schedule
+                #instantiate form input 
                 if dtf_start.validate_on_submit() and dtf_finish.validate_on_submit():
                     dt_start_val= request.form['dt_start']
                     dt_finish_val = request.form['dt_finish']

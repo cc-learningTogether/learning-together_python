@@ -32,20 +32,22 @@ def search():
                     form_language_val = request.form['language']
                     #gender input from form 
                     form_gender_val = request.form['gender']
+                    #is_supporter input from form 
+                    form_is_supporter_val = request.form['is_supporter']
                     try:
-                        #query pair-programming partner
-                        # if language and gender are not chosen
-                        if search_input_handler(form_language_val) == -1 and search_input_handler(form_gender_val) == -1:
-                            schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id).filter(ScheduleDatetime.start_at >= start_at).all()
-                        # if gender is not chosen 
-                        elif search_input_handler(form_gender_val) == -1:
+                        #query pair-programming partner (! datetime and language are must)
+                        #if gender and is_supporter are not chosen
+                        if search_input_handler(form_gender_val) == -1 and search_input_handler(form_is_supporter_val) == -1:
                             schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).all()
-                        # if language is not chosen 
-                        elif search_input_handler(form_language_val) == -1:
-                            schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.gender).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_gender_val)).all()
-                        # else (datetime is necessary)
-                        else:    
+                        #if gender is not chosen 
+                        elif search_input_handler(form_gender_val) == -1:
+                            schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.is_supporter).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).all()
+                        # if is_supporter is not chosen 
+                        elif search_input_handler(form_is_supporter_val) == -1:
                             schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).all()
+                        # if all conditions are chosen 
+                        else:
+                            schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender, UserProfile.is_supporter).filter(ScheduleDatetime.start_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).all()
                         ## Todo: initialize input 
                         return render_template('search.html', year=YEAR, name=SITE_NAME, 
                         form_start=dtf_start, 
