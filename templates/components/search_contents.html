@@ -3,11 +3,9 @@
 		<h1 class="mt-5 text-center text-capitalize"> Find your pair-programming partner! </h1>
 		<form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
   <!-- datepicker -->
-  <label for="datetimepicker">Date and Time:</label><br/>
+  <label for="datetimepicker">Date/Time from: </label><br/>
   {{ form_start.hidden_tag() }} 
   {{ form_start.dt_start(class="dtpick") }} 
-  {{ form_finish.hidden_tag() }} 
-  {{ form_finish.dt_finish(class="dtpick") }}<br/>
   <div class="col-md-6 d-flex flex-column">
     {{ form_search.language.label }}
     {{ form_search.language(class_="form-select") }}
