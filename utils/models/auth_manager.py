@@ -57,7 +57,7 @@ class AuthManager(UserMixin):
             user = UserProfile.query.filter_by(email=self.user_data['email']).first()
             # raise the exception if no user where found
             if not user:
-                raise ValueError('No user found check you email or register a new account')
+                raise ValueError('No user found check your email or register a new account')
             # check the password
             user_password = UserPassword.query.filter_by(user_id=str(user.user_profile_id)).first()
             if not check_password_hash(user_password.password, self.user_data['password']):
@@ -78,7 +78,7 @@ class AuthManager(UserMixin):
             # check the presence of the user in the database
             user = UserProfile.query.filter_by(email=self.user_data).first()
             if not user:
-                raise ValueError('No user found check you email or register a new account')
+                raise ValueError('No user found check your email or register a new account')
             # send the email with the link for the change password route
             send_change_password_email(user)
 

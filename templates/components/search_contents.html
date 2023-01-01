@@ -1,0 +1,28 @@
+<div class="d-flex flex-column align-items-center mt-5">
+	<div class="card w-50 d-flex flex-column align-items-center shadow">
+		<h1 class="mt-5 text-center text-capitalize"> Find your pair-programming partner! </h1>
+		<form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
+  <!-- datepicker -->
+  <label for="datetimepicker">Date/time from</label><br/>
+  {{ form_start.hidden_tag() }} 
+  {{ form_start.dt_start(class="dtpick") }} 
+  <div class="col-md-6 d-flex flex-column">
+    {{ form_search.language.label }}
+    {{ form_search.language(class_="form-select") }}
+  </div>
+  <div class="col-md-6 d-flex flex-column">
+    {{ form_search.gender.label }}
+    {{ form_search.gender(class_="form-select") }}
+  </div> 
+  <div class="col-md-6">
+    {{ form_search.is_supporter.label }}
+    {{ form_search.is_supporter(class_="form-select") }}
+  </div>
+  <div class="col-12 d-flex align-items-center justify-content-center">
+    {{ form_search.submit_register(class_= "form-control") }}
+  </div>
+		</form>
+	</div>
+	<p>message: {{ message }}</p>
+	<p>ret: {{ result }}</p>
+</div>

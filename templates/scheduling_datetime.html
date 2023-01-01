@@ -53,45 +53,21 @@
   </head>
 
   <body>
-    {% block Header %} 
+  {% block Header %} 
 	{% include "components/header.html" %} 
 	{% endblock %} 
-	{%if not current_user.is_authenticated :%} 
-	{% block home_page %} 
-	{% include "components/home_page.html" %} 
+	{% block datetimepicker %} 
+	{% include "components/datetimepicker.html" %} 
 	{% endblock %} 
-	{% else: %} 
-	{% block main_page %} 
-	{% include "components/main_page.html" %} 
-	{% endblock %} 
-	{% endif %} 
 	{% block Footer %} 
 	{% include "components/footer.html" %} 
 	{% endblock %}
 
 	<script type="text/javascript">
-    //to delete slot
-    function deleteSlot(slotId){
-      console.log("click!", slotId)
-      let url = ""; 
-      $.ajax({
-        url: "/", 
-        data: {val: slotId},
-        type: "POST",
-        dataType: "json",
-        success: function(data){
-          response = data; 
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-          console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
-        }
-      });
-      (function(){ 
-        window.alert("Done");
-        window.location.reload();
-      }())
-    }
-
+    // to show datetimepicker
+		$(".dtpick").each(function () {
+		  $(this).datetimepicker();
+		});
 	  </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
