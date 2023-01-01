@@ -44,30 +44,23 @@ class ChangePSWForm(FlaskForm):
     submit_change_password = SubmitField("Submit")
 
 
-
-# Register Form
-class UserSettingForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "New Username"})
-    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "New Email"})
-    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
-    confirm_password = PasswordField('Password', validators=[DataRequired()],
-                                     render_kw={"placeholder": "Confirm Password"})
-
 class DateTimeForm_start(FlaskForm):
     dt_start = StringField("datetime_start", validators=[DataRequired()])
+
     def validate_dt_start(self, dt_start):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
-        if ( date - datetime.now() ).total_seconds() < 0 :
+        if (date - datetime.now()).total_seconds() < 0:
             raise ValidationError("Chose later than today")
 
 
 class DateTimeForm_finish(FlaskForm):
     dt_finish = StringField("datetime_finish", validators=[DataRequired()])
+
     def validate_dt_finish(self, dt_finish):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
-        if ( date - datetime.now() ).total_seconds() < 0 :
+        if (date - datetime.now()).total_seconds() < 0:
             raise ValidationError("Chose later than today")
 
 
@@ -79,6 +72,16 @@ class SearchForm(FlaskForm):
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit = SubmitField("Update")
+
+
+# Register Form
+class UserSettingForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "New Username"})
+    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "New Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    submit = SubmitField("Submit")
 
 
 class ChangeUsernameForm(FlaskForm):
@@ -111,6 +114,3 @@ class ChangeLanguageForm(FlaskForm):
 class ChangeSupporterStatusForm(FlaskForm):
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit = SubmitField("Update")
-
-
-

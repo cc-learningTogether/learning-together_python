@@ -259,17 +259,17 @@
 									<div class="col-8 mb-3">
 										{{ form.hidden_tag() }}
 										<div class="col-12 mb-2 form-group d-flex flex-column">
-											{{ form.password(class_="form-control", size=50) }}
+											{{ password_form.password(class_="form-control", size=50) }}
 										</div>
 										<div class="col-12 form-group d-flex flex-column">
-											{{ form.confirm_password(class_="form-control", size=50) }}
+											{{ password_form.confirm_password(class_="form-control", size=50) }}
 										</div>
 									</div>
 									<div class="modal-footer col-12 pb-0">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a
 												class="form-reset" href="{{url_for('settings.settings')}}">Cancel</a>
 										</button>
-										{{ form.submit(class_= "form-control") }}
+										{{ password_form.submit_change_password(class_= "form-control") }}
 									</div>
 								</form>
 							</div>
