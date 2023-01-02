@@ -7,8 +7,6 @@ from datetime import datetime, timedelta, timezone
 
 from database.models.user import UserProfile
 
-1
-
 
 def password_check(string):
     if len(string) < 6:
@@ -95,7 +93,7 @@ def verify_reset_token(token):
 def search_input_handler(data):
     """take a input value from the register form and return a Integer"""
     if data == '-':
-        return -1 
+        return -1
     if data == 'English/英語' or data == 'Male/男':
         return 0
     if data == 'Japanese/日本語' or data == 'Female/女':

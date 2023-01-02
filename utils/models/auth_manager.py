@@ -1,9 +1,10 @@
 import uuid
+import os
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import cast, String
 from flask_login import UserMixin, login_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from database.db import db
 from database.models.user import UserProfile
@@ -11,6 +12,33 @@ from database.models.password import UserPassword
 
 from utils.helper import register_input_handler
 from utils.email import send_change_password_email, send_change_password_confirmation
+
+
+def create_admin():
+    users = UserProfile.query.all()
+    if len(users) == 0 and os.getenv("ADMIN_EMAIL"):
+        user_id = str(uuid.uuid4())
+        password = "admin1" if not os.getenv("ADMIN_PASSWORD") else os.getenv("ADMIN_PASSWORD")
+        hashed_password = generate_password_hash(
+            password,
+            method='pbkdf2:sha256',
+            salt_length=8
+        )
+        user = UserProfile(
+            email=os.getenv("ADMIN_EMAIL"),
+            user_name="admin" if not os.getenv("ADMIN_USERNAME") else os.getenv("ADMIN_USERNAME"),
+            user_profile_id=user_id,
+            is_supporter=True,
+            is_admin=True
+        )
+
+        password = UserPassword(user_id=user_id, password=hashed_password)
+        db.session.add(user)
+        db.session.add(password)
+        db.session.commit()
+
+    if not os.getenv("ADMIN_EMAIL"):
+        print("The ADMIN_EMAIL must be set in the env file")
 
 
 class AuthManager(UserMixin):
