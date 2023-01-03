@@ -10,7 +10,6 @@ from database.models.user import UserProfile
 
 from utils.email import mail
 from utils.config import database_config, email_config
-from utils.models.auth_manager import create_admin
 
 
 def create_app():
