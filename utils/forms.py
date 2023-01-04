@@ -65,7 +65,7 @@ class DateTimeForm_finish(FlaskForm):
 # Search Form
 class SearchForm(FlaskForm):
     # TODO set language field to required when database is ready
-    language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
+    language = SelectField("*Language", choices=["-", "English/英語", "Japanese/日本語"])
     gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
