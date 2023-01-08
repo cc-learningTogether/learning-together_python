@@ -46,19 +46,21 @@ class ChangePSWForm(FlaskForm):
 
 class DateTimeForm_start(FlaskForm):
     dt_start = StringField("datetime_start", validators=[DataRequired()])
+
     def validate_dt_start(self, dt_start):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
-        if ( date - datetime.now() ).total_seconds() < 0 :
+        if (date - datetime.now()).total_seconds() < 0:
             raise ValidationError("Chose later than today")
 
 
 class DateTimeForm_finish(FlaskForm):
     dt_finish = StringField("datetime_finish", validators=[DataRequired()])
+
     def validate_dt_finish(self, dt_finish):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
-        if ( date - datetime.now() ).total_seconds() < 0 :
+        if (date - datetime.now()).total_seconds() < 0:
             raise ValidationError("Chose later than today")
 
 
@@ -69,4 +71,46 @@ class SearchForm(FlaskForm):
     gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
-    submit_register = SubmitField("Search")
+    submit = SubmitField("Update")
+
+
+# Register Form
+class UserSettingForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "New Username"})
+    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "New Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    submit = SubmitField("Submit")
+
+
+class ChangeUsernameForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "New Username"})
+    submit = SubmitField("Update")
+
+
+class ChangeEmailForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "New Email"})
+    submit = SubmitField("Update")
+
+
+class ChangePasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField('Password', validators=[DataRequired()],
+                                     render_kw={"placeholder": "Confirm Password"})
+    submit = SubmitField("Update")
+
+
+class ChangeGenderForm(FlaskForm):
+    gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
+    submit = SubmitField("Update")
+
+
+class ChangeLanguageForm(FlaskForm):
+    language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
+    submit = SubmitField("Update")
+
+
+class ChangeSupporterStatusForm(FlaskForm):
+    is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
+    submit = SubmitField("Update")
