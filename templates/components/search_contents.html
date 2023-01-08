@@ -1,6 +1,6 @@
 <div class="d-flex flex-column align-items-center mt-5">
 	<div class="card w-50 d-flex flex-column align-items-center shadow">
-		<h1 class="mt-5 text-center text-capitalize"> Find your pair-programming partner! </h1>
+		<h3 class="mt-5 text-center text-capitalize"> Find your pair-programming partner! </h3>
 		<form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
       {{ form_start.hidden_tag() }} 
       <div>
@@ -23,7 +23,7 @@
         {{ form_search.submit_register(class_= "form-control") }}
       </div>
 		</form>
+    <p>message: {{ message }}</p>
+    <p>result: {{ result }}</p>
 	</div>
-	<p>message: {{ message }}</p>
-	<p>result: {{ result }}</p>
 </div>

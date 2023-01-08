@@ -44,8 +44,6 @@ class ChangePSWForm(FlaskForm):
 
 class DateTimeForm(FlaskForm):
     dt_start = StringField("*Start at", validators=[DataRequired()])
-    # dt_finish = StringField("Finish at", validators=[DataRequired()])
-    # dt_start = StringField("Start at")
     dt_finish = StringField("*Finish at")
     submit_register = SubmitField("Submit")
 
@@ -66,5 +64,5 @@ class DateTimeForm(FlaskForm):
 class SearchForm(FlaskForm):
     language = SelectField("*Language", choices=["-", "English/英語", "Japanese/日本語"])
     gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
-    is_supporter = SelectField("Supporter", choices=["-", "No/いいえ", "Yes/はい"])
+    is_supporter = SelectField("Are you looking for a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit_register = SubmitField("Search")
