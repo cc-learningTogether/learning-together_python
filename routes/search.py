@@ -4,7 +4,7 @@ from jinja2 import TemplateNotFound
 from utils.constants import YEAR, SITE_NAME
 
 from datetime import datetime
-from utils.forms import SearchForm, DateTimeForm_start
+from utils.forms import SearchForm, DateTimeForm
 
 from database.db import db
 from database.models.schedule_datetime import ScheduleDatetime
@@ -17,7 +17,8 @@ search_route = Blueprint('search', __name__, template_folder="routes")
 @search_route.route('/search', methods=['GET', 'POST'])
 def search():    
     #instantiate form from class 
-    dtf_start = DateTimeForm_start() 
+    dtf_start = DateTimeForm() 
+    dtf_finish = 0; # default value 
     form = SearchForm()
 
     if request.method == 'POST':

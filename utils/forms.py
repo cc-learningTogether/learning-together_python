@@ -44,22 +44,38 @@ class ChangePSWForm(FlaskForm):
     submit_change_password = SubmitField("Submit")
 
 
-class DateTimeForm_start(FlaskForm):
+class DateTimeForm(FlaskForm):
     dt_start = StringField("datetime_start", validators=[DataRequired()])
-    def validate_dt_start(self, dt_start):
+    dt_finish = StringField("datetime_finish", validators=[DataRequired()])
+
+    def validateDtStart(self, dt_start):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
         if ( date - datetime.now() ).total_seconds() < 0 :
             raise ValidationError("Chose later than today")
 
-
-class DateTimeForm_finish(FlaskForm):
-    dt_finish = StringField("datetime_finish", validators=[DataRequired()])
-    def validate_dt_finish(self, dt_finish):
+    def validateDtFinish(self, dt_finish):
         # if the user input incorrect datetime 
         date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
         if ( date - datetime.now() ).total_seconds() < 0 :
             raise ValidationError("Chose later than today")
+
+# class DateTimeForm_start(FlaskForm):
+#     dt_start = StringField("datetime_start", validators=[DataRequired()])
+#     def validate_dt_start(self, dt_start):
+#         # if the user input incorrect datetime 
+#         date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
+#         if ( date - datetime.now() ).total_seconds() < 0 :
+#             raise ValidationError("Chose later than today")
+
+
+# class DateTimeForm_finish(FlaskForm):
+#     dt_finish = StringField("datetime_finish", validators=[DataRequired()])
+#     def validate_dt_finish(self, dt_finish):
+#         # if the user input incorrect datetime 
+#         date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
+#         if ( date - datetime.now() ).total_seconds() < 0 :
+#             raise ValidationError("Chose later than today")
 
 
 # Search Form

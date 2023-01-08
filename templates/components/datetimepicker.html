@@ -1,10 +1,8 @@
 <!-- datepicker -->
 <h3>Date and Time</h3>
 <form method="post" action="">
-  {{ form_start.hidden_tag() }} 
-  {{ form_start.dt_start(class="dtpick") }}
-  {{ form_finish.hidden_tag() }} 
-  {{ form_finish.dt_finish(class="dtpick") }}
+  {{ dtf_form.hidden_tag() }} 
+  {{ dtf_form.dt_start(class="dtpick") }}
   <button type="submit">submit</button>
 </form>
 
