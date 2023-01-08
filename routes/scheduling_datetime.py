@@ -16,27 +16,28 @@ scheduling_datetime_route = Blueprint('scheduling_datetime', __name__, template_
 def scheduling_datetime():
     dtf = DateTimeForm()
     if request.method == 'POST':
-        try:
-            if dtf.validate_on_submit():
-                dt_start_val= request.form['dt_start']
-                dt_finish_val = request.form['dt_finish']
-                #validate two inputs
-                # first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
-                # second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
-                # if ( second - first ).total_seconds() < 0 :
-                #     return render_template('scheduling_datetime.html', year=YEAR, 
-                #     form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
-                try:
-                    #insert data into db
-                    opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
-                    db.session.add(opening_slot)
-                    db.session.commit()
-                    ## todo: initialize input 
-                    return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, 
-                    date_start=dt_start_val, date_finish=dt_finish_val, 
-                    dtf_form=dtf, message="Success")
-                except TemplateNotFound: return abort(404)
-        except TemplateNotFound: return abort(404)
+        if dtf.validate_on_submit():
+            dt_start_val= request.form['dt_start']
+            dt_finish_val = request.form['dt_finish']
+            #validate two inputs *WTForm validation is valid only by field
+            first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
+            second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
+            if ( second - first ).total_seconds() < 0 :
+                return render_template('scheduling_datetime.html', year=YEAR, 
+                dtf_form=dtf, message="'Start' should earlier than 'Finish'")
+            try:
+                #insert data into db
+                opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
+                db.session.add(opening_slot)
+                db.session.commit()
+                ## todo: initialize input 
+                return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, 
+                date_start=dt_start_val, date_finish=dt_finish_val, 
+                dtf_form=dtf, message="Success")
+            except TemplateNotFound: return abort(404)
+        else: 
+            return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, 
+            dtf_form=dtf, message="Invalid input")
     else:
         try:
             return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, dtf_form=dtf)
