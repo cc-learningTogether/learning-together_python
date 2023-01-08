@@ -1,10 +1,18 @@
+<!-- Todo : design -->
 <!-- datepicker -->
-<h3>Date and Time</h3>
 <form method="post" action="">
   {{ dtf_form.hidden_tag() }} 
-  {{ dtf_form.dt_start(class="dtpick", autocomplete="off") }}
-  {{ dtf_form.dt_finish(class="dtpick", autocomplete="off") }}
-  <button type="submit">submit</button>
+  <div>
+    {{ dtf_form.dt_start.label }}
+    {{ dtf_form.dt_start(class="dtpick", autocomplete="off") }}
+  </div>
+  <div>
+    {{ dtf_form.dt_finish.label }}
+    {{ dtf_form.dt_finish(class="dtpick", autocomplete="off") }}
+  </div>
+  <div>
+    {{ dtf_form.submit_register(class_= "submit_button") }}
+  </div>
 </form>
 
 {% if message :%}

@@ -45,8 +45,9 @@ class ChangePSWForm(FlaskForm):
 
 
 class DateTimeForm(FlaskForm):
-    dt_start = StringField("datetime_start", validators=[DataRequired()])
-    dt_finish = StringField("datetime_finish", validators=[DataRequired()])
+    dt_start = StringField("Start at", validators=[DataRequired()])
+    dt_finish = StringField("Finish at", validators=[DataRequired()])
+    submit_register = SubmitField("Submit")
 
     def validate_dt_start(self, dt_start):
         # if the user input incorrect datetime 
