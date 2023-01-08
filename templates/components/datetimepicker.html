@@ -1,23 +1,23 @@
-<!-- Todo : design -->
-<!-- datepicker -->
-<form method="post" action="">
-  {{ dtf_form.hidden_tag() }} 
-  <div>
-    {{ dtf_form.dt_start.label }}
-    {{ dtf_form.dt_start(class="dtpick", autocomplete="off") }}
+<div class="d-flex flex-column align-items-center mt-5">
+  <div class="card w-50 d-flex flex-column align-items-center shadow">
+    <form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
+      {{ dtf_form.hidden_tag() }}
+      <!-- datepicker -->
+      <div class="col-md-6 d-flex flex-column">
+        {{ dtf_form.dt_start.label }} {{ dtf_form.dt_start(class="dtpick",
+        autocomplete="off") }}
+      </div>
+      <div class="col-md-6 d-flex flex-column">
+        {{ dtf_form.dt_finish.label }} {{ dtf_form.dt_finish(class="dtpick",
+        autocomplete="off") }}
+      </div>
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        {{ dtf_form.submit_register(class_= "form-control") }}
+      </div>
+    </form>
+    {% if message :%}
+    <p>From {{date_start}} to {{date_finish}}</p>
+    <p>{{message}}</p>
+    {% endif %}
   </div>
-  <div>
-    {{ dtf_form.dt_finish.label }}
-    {{ dtf_form.dt_finish(class="dtpick", autocomplete="off") }}
-  </div>
-  <div>
-    {{ dtf_form.submit_register(class_= "submit_button") }}
-  </div>
-</form>
-
-{% if message :%}
-<p> From {{date_start}} to {{date_finish}}</p>
-<p> {{message}} </p>
-{% endif %}
-
-
+</div>
