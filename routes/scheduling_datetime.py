@@ -13,6 +13,7 @@ scheduling_datetime_route = Blueprint('scheduling_datetime', __name__, template_
 
 
 @scheduling_datetime_route.route('/scheduling_datetime', methods=['GET', 'POST'])
+@login_required
 def scheduling_datetime():
     dtf = DateTimeForm()
     
@@ -44,7 +45,7 @@ def scheduling_datetime():
                         date_start=dt_start_val, date_finish=dt_finish_val, message="Success")
                     except TemplateNotFound: return abort(404)
                 return render_template('scheduling_datetime.html', year=YEAR, 
-                form_start=dtf_start, form_finish=dtf_finish, message="Validation error")
+                dtf_form=dtf, message="Validation error")
         except TemplateNotFound: return abort(404)
     else:
         try:
