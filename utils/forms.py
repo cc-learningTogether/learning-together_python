@@ -59,6 +59,12 @@ class DateTimeForm(FlaskForm):
         date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
         if ( date - datetime.now() ).total_seconds() < 0 :
             raise ValidationError("Chose later than today")
+    
+    def validateDtStartAndDtFinish(self, dt_start, dt_finish):
+        first = datetime.strptime(dt_start, "%Y/%m/%d %H:%M")
+        second = datetime.strptime(dt_finish, "%Y/%m/%d %H:%M")
+        if ( second - first ).total_seconds() < 0 :
+            raise ValidationError("Start-date should earlier than Finish-date")
 
 # class DateTimeForm_start(FlaskForm):
 #     dt_start = StringField("datetime_start", validators=[DataRequired()])
