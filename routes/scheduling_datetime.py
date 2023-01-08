@@ -19,7 +19,11 @@ def scheduling_datetime():
         if dtf.validate_on_submit():
             dt_start_val= request.form['dt_start']
             dt_finish_val = request.form['dt_finish']
-            #validate two inputs *WTForm validation is valid only by field
+            # Check input of 'Finish'
+            if dt_finish_val is '': 
+                return render_template('scheduling_datetime.html', year=YEAR, 
+                dtf_form=dtf, message="'Finish' is empty")
+            # Check two inputs:WTForm validation is valid only by field
             first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
             second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
             if ( second - first ).total_seconds() < 0 :
