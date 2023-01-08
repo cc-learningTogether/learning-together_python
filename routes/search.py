@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort, request
-from flask_login import current_user
+from flask_login import current_user, login_required 
 from jinja2 import TemplateNotFound
 from utils.constants import YEAR, SITE_NAME
 
@@ -15,6 +15,7 @@ from utils.helper import search_input_handler
 search_route = Blueprint('search', __name__, template_folder="routes")
 
 @search_route.route('/search', methods=['GET', 'POST'])
+@login_required
 def search():    
     #instantiate form from class 
     dtf_start = DateTimeForm() 

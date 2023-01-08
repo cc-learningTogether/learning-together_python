@@ -61,7 +61,6 @@ class DateTimeForm(FlaskForm):
         if ( date - datetime.now() ).total_seconds() < 0 :
             raise ValidationError("Chose later than today")
     
-# Search Form
 class SearchForm(FlaskForm):
     # TODO set language field to required when database is ready
     language = SelectField("*Language", choices=["-", "English/英語", "Japanese/日本語"])
