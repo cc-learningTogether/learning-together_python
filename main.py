@@ -6,13 +6,18 @@ from app import create_app
 
 from routes.router import initialize_routes
 
+from utils.models.auth_manager import create_admin
+
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
 
 # create the application
 app = create_app()
 
-# Register the blueprint (routes)
+with app.app_context():
+    create_admin()
+
+# initialize the router
 
 initialize_routes(app)
 

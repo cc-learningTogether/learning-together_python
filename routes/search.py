@@ -14,7 +14,9 @@ from utils.helper import search_input_handler
 
 search_route = Blueprint('search', __name__, template_folder="routes")
 
+
 @search_route.route('/search', methods=['GET', 'POST'])
+
 @login_required
 def search():    
     dtf_start = DateTimeForm(dt_finish="") # default value for dt_finish
@@ -56,3 +58,4 @@ def search():
         try:
             return render_template('search.html', year=YEAR, name=SITE_NAME, form_start=dtf_start, form_search=form)
         except TemplateNotFound: return abort(404)
+

@@ -54,7 +54,7 @@ nav{
     height: 3rem;
 }
 
-home-link{
+.home-link{
       text-decoration:none;
 }
 
@@ -74,7 +74,7 @@ home-link{
 
 /* Form */
 
-#submit_register, #submit_login, #submit_forgot_password, #submit_change_password{
+#submit_register, #submit_login, #submit_forgot_password, #submit_change_password,#submit{
     color:white;
     background-color: #6200ea;
     width:25%;
@@ -85,3 +85,17 @@ home-link{
     justify-content: start;
 }
 
+.btn-link{
+    color: #6200ea;
+}
+
+
+.form-reset{
+    text-decoration: none;
+    color: white;
+}
+
+
+.form-reset:hover{
+    color: white;
+}
