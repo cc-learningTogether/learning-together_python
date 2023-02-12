@@ -1,44 +1,23 @@
-from flask import flash
+import os
+from typing import Tuple
+
+import jwt
+
+from datetime import datetime, timedelta, timezone
+
 from database.models.user import UserProfile
-from database.models.password import UserPassword
-from database.db import db
-from sqlalchemy.exc import IntegrityError
-import uuid
 
 
-def register_user(form_data):
-    """return a user object or and error"""
-    try:
-        user_id = uuid.uuid4()
-        user = UserProfile(email=form_data["email"], user_name=form_data['username'], user_profile_id=user_id,
-                           gender=register_input_handler(form_data["gender"]),
-                           main_language=register_input_handler(form_data['language']),
-                           is_supporter=register_input_handler(form_data['is_supporter']))
-        password = UserPassword(user_id=user_id, password=form_data['password'])
-        db.session.add(user)
-        db.session.add(password)
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
-        errors = {}
-        if UserProfile.query.filter_by(email=form_data["email"]).first():
-            errors['email'] = "Email already used login please"
-        if UserProfile.query.filter_by(user_name=form_data["username"]).first():
-            errors['username'] = "Username already taken!"
-        if UserProfile.query.filter_by(user_name=form_data["password"]).first():
-            return register_user(form_data)
-        return {
-            'user': "",
-            'errors': errors
-        }
-
-    return {
-        'user': user,
-        'errors': "",
-    }
+def password_check(string):
+    if len(string) < 6:
+        return 'The password must contain at least 6 characters'
+    if len(string) > 10:
+        return 'The password must contain max 10 characters'
+    return False
 
 
 def register_input_handler(data):
+    """take a input value from the register form and return a Integer"""
     if data == '-':
         return
     if data == 'English/英語' or data == 'Male/男':
@@ -47,5 +26,79 @@ def register_input_handler(data):
         return 1
     if data == 'No/いいえ':
         return False
-    if data == "Yes/はい":
+    if data == 'Yes/はい':
+        return True
+
+
+def favorite_language(val: int) -> Tuple[int, str]:
+    """take the value saved in the database and converted it in the correspondent value"""
+    if val == -1:
+        return 0, "-"
+    elif val == 0:
+        return 1, 'English/英語'
+    elif val == 1:
+        return 2, 'Japanese/日本語'
+
+
+def set_gender(val: int) -> Tuple[int, str]:
+    """take the value saved in the database and converted it in the correspondent value"""
+    if val == -1:
+        return 0, "-"
+    elif val == 0:
+        return 1, 'Male/男'
+    elif val == 1:
+        return 2, 'Female/女'
+
+
+def set_is_supporter(val: bool) -> str:
+    if val:
+        return 'Yes/はい'
+    return 'No/いいえ'
+
+
+def get_reset_token(user):
+    """create the jwt token"""
+    return jwt.encode({'reset_password': user.user_name,
+                       'exp': datetime(year=datetime.now().year, month=datetime.now().month,
+                                       day=datetime.now().day).now(
+                           tz=timezone.utc) + timedelta(seconds=5200)},
+                      key=os.getenv('SECRET_KEY'))
+
+
+def input_handler(data):
+    """take a input value from the register form and return a Integer"""
+    if data == '-':
+        return -1
+    if data == 'English/英語' or data == 'Male/男':
+        return 0
+    if data == 'Japanese/日本語' or data == 'Female/女':
+        return 1
+    if data == 'No/いいえ':
+        return False
+    if data == 'Yes/はい':
+        return True
+
+
+def verify_reset_token(token):
+    """varify the validity of the jwt token sent by email"""
+    try:
+        username = jwt.decode(token,
+                              key=os.getenv('SECRET_KEY'), algorithms="HS256")['reset_password']
+    except Exception as e:
+        print(e)
+        return
+    return UserProfile.query.filter_by(user_name=username).first()
+
+
+def search_input_handler(data):
+    """take a input value from the register form and return a Integer"""
+    if data == '-':
+        return -1
+    if data == 'English/英語' or data == 'Male/男':
+        return 0
+    if data == 'Japanese/日本語' or data == 'Female/女':
+        return 1
+    if data == 'No/いいえ':
+        return False
+    if data == 'Yes/はい':
         return True

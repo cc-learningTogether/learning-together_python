@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, abort, url_for, redirect
+from flask import Blueprint, render_template, abort
+from flask_login import login_user, current_user
 from jinja2 import TemplateNotFound
+from werkzeug.security import generate_password_hash
+
 from utils.forms import RegisterForm
 from utils.constants import YEAR, SITE_NAME
-from utils.helper import register_user
-from werkzeug.security import generate_password_hash
+from utils.helper import password_check
+from utils.models.auth_manager import AuthManager
 
 signup_route = Blueprint('signup', __name__, template_folder='routes')
 
@@ -11,10 +14,14 @@ signup_route = Blueprint('signup', __name__, template_folder='routes')
 @signup_route.route('/signup', methods=['GET', 'POST'])
 def signup():
     try:
-        # TODO add the errors messages to the register form
         form = RegisterForm()
+        # TODO add the errors messages to the register form
         if form.validate_on_submit():
             # TODO complete when database is ready
+            if password_check(form.password.data):
+                return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
+                                       pass_check=password_check(form.password.data), messages="",
+                                       current_user=current_user)
             if form.password.data == form.confirm_password.data:
                 hashed_password = generate_password_hash(
                     form.password.data,
@@ -31,17 +38,17 @@ def signup():
                     "is_supporter": form.is_supporter.data
                 }
 
-                response = register_user(data)
+                response = AuthManager(data).register_user()
+
                 if response['user']:
-                    # TODO add the login stuff here
-                    return render_template('index.html', year=YEAR)
+                    login_user(response['user'])
+                    return render_template('index.html', year=YEAR, current_user=current_user)
                 if response['errors']:
-                    print(response['errors']['username'])
-                    # TODO add the errors messages to the register form
                     return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
-                                           messages=response["errors"])
+                                           messages=response['errors'], current_user=current_user)
             return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR,
-                                   pass_check="Password doesn't match", messages="")
-        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, messages="")
+                                   pass_check="Password doesn't match", messages="", current_user=current_user)
+        return render_template('sign_up.html', name=SITE_NAME, form=form, year=YEAR, messages="",
+                               current_user=current_user)
     except TemplateNotFound:
         return abort(404)

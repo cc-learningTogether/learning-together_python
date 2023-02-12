@@ -1,18 +1,12 @@
 import os
 
-from flask import render_template
 from dotenv import load_dotenv
-from datetime import datetime
 
 from app import create_app
-from utils.forms import RegisterForm, LoginForm, ForgotPswForm, ChangePSWForm
 
-from routes.home import home_route
-from routes.signup import signup_route
-from routes.signin import signin_route
-from routes.logout import logout_route
-from routes.forgot_password import forgot_password_route
-from routes.change_password import change_psw_route
+from routes.router import initialize_routes
+
+from utils.models.auth_manager import create_admin
 
 # load_dotenv make possible to use a .env file for store the environment variable
 load_dotenv()
@@ -20,78 +14,12 @@ load_dotenv()
 # create the application
 app = create_app()
 
-SITE_NAME = "Learning Together"
+with app.app_context():
+    create_admin()
 
-year = datetime.now().year
+# initialize the router
 
-app.register_blueprint(home_route)
-
-# @app.route('/')
-# def home():
-#     return render_template('index.html', year=year)
-
-app.register_blueprint(signup_route)
-
-# @app.route('/signup', methods=["GET", "POST"])
-# def signup():
-#     form = RegisterForm()
-#     if form.validate_on_submit():
-#         # TODO complete when database is ready
-#         data = {
-#             "user_id": "",
-#             "username": form.username.data,
-#             "email": form.email.data,
-#             "password": form.password.data,
-#             "gender": form.gender.data,
-#             "language": form.language.data,
-#             "is_supporter": form.is_supporter.data
-#         }
-#         print(data)
-#         return render_template('index.html', year=year)
-#     return render_template('sign_up.html', name=SITE_NAME, form=form, year=year)
-
-
-app.register_blueprint(signin_route)
-
-# @app.route('/signin', methods=["GET", "POST"])
-# def signin():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         data = {
-#             form.login_email.data,
-#             form.login_password.data
-#         }
-#         # TODO complete when database is ready
-#         print(data)
-#         return render_template('index.html', year=year)
-#     return render_template('sign_in.html', name=SITE_NAME, form=form, year=year)
-
-app.register_blueprint(logout_route)
-
-app.register_blueprint(forgot_password_route)
-
-# @app.route("/forgot-password", methods=["POST", "GET"])
-# def forgot_password():
-#     form_send_email = ForgotPswForm()
-#     if form_send_email.validate_on_submit():
-#         email = form_send_email.email
-#         # TODO verify the presence of the email on the database and send email (Flask email or other)
-#         return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
-#     return render_template("forgot_password.html", name=SITE_NAME, form=form_send_email, year=year)
-
-app.register_blueprint(change_psw_route)
-#
-# @app.route("/change-password/<string:token>", methods=["POST", "GET"])
-# def change_password(token):
-#     # TODO verify the token
-#     form_change_password = ChangePSWForm()
-#     if form_change_password.validate_on_submit():
-#         # TODO check if the 2 password are the same and change the psw i the database
-#         # TODO decide if login directly or redirect to the login page
-#         pass
-#         return render_template('index.html', year=year)
-#     return render_template("change_password.html", name=SITE_NAME, form=form_send_email, year=year)
-
+initialize_routes(app)
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))

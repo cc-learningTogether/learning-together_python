@@ -1,0 +1,16 @@
+<h3>To Do</h3>
+<ul>
+  <li>List the request for appointment</li>
+</ul>
+
+{% if op_slot :%}
+<h3>Your schedule</h3>
+<form method="post" action="">
+  {% for item in op_slot %}
+<li>From {{item.start_at}} to {{item.finish_at}} / with {{ item.user_booking_slot }}<i class="fas fa-trash" id='slot_{{item.id}}' onclick="deleteSlot('{{item.id}}')"></i></li>
+{% endfor %}
+</form>
+{% endif %}
+
+
+
