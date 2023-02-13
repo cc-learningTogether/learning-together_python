@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, request
+from flask import Blueprint, render_template, abort, request, session, redirect
 from flask_login import current_user, login_required 
 from jinja2 import TemplateNotFound
 from utils.constants import YEAR, SITE_NAME
@@ -13,7 +13,6 @@ from database.models.user import UserProfile
 from utils.helper import search_input_handler
 
 search_route = Blueprint('search', __name__, template_folder="routes")
-
 
 @search_route.route('/search', methods=['GET', 'POST'])
 
@@ -47,9 +46,19 @@ def search():
                 else:
                     schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender, UserProfile.is_supporter).filter(ScheduleDatetime.start_at <= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
                 ## Todo: initialize input 
+
+                # 取得したデータを整形し保持させ、ページにリダイレクトする
+                list = []
+                for i in range(len(schedule_list)):
+                    data = []
+                    data.append(schedule_list[i]['id'])
+                    data.append(schedule_list[i]['start_at'])
+                    list.append(data) 
+                    
+
                 return render_template('search.html', year=YEAR, name=SITE_NAME, 
                 form_start=dtf_start, 
-                form_search=form, result=schedule_list, message="Success")
+                form_search=form, result=list, message="succsess")
             except TemplateNotFound: return abort(404)
         return render_template('search.html', year=YEAR, name=SITE_NAME, 
         form_start=dtf_start, 
