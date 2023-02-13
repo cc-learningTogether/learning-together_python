@@ -35,24 +35,25 @@ def search():
             try:
                 #if gender and is_supporter are not chosen
                 if search_input_handler(form_gender_val) == -1 and search_input_handler(form_is_supporter_val) == -1:
-                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language).filter(ScheduleDatetime.start_at <= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.id!=current_user.id).all()
+                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language).filter(ScheduleDatetime.start_at >= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.id!=current_user.id).all()
                 #if gender is not chosen 
                 elif search_input_handler(form_gender_val) == -1:
-                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.is_supporter).filter(ScheduleDatetime.start_at <= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
+                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.is_supporter).filter(ScheduleDatetime.start_at >= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
                 # if is_supporter is not chosen 
                 elif search_input_handler(form_is_supporter_val) == -1:
-                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender).filter(ScheduleDatetime.start_at <= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.id!=current_user.id).all()
+                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender).filter(ScheduleDatetime.start_at >= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.id!=current_user.id).all()
                 # if all conditions are chosen 
                 else:
-                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender, UserProfile.is_supporter).filter(ScheduleDatetime.start_at <= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
+                    schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, UserProfile.id, UserProfile.main_language, UserProfile.gender, UserProfile.is_supporter).filter(ScheduleDatetime.start_at >= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
                 ## Todo: initialize input 
 
                 # 取得したデータを整形し保持させ、ページにリダイレクトする
                 list = []
                 for i in range(len(schedule_list)):
                     data = []
-                    data.append(schedule_list[i]['id'])
-                    data.append(schedule_list[i]['start_at'])
+                    # if schedule_list[i]["user_opening_slot"] == 0: # 
+                    for k in range(len(schedule_list[i])):
+                        data.append(schedule_list[i][k])
                     list.append(data) 
                     
 
