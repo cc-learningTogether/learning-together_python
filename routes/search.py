@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, request, session, redirect
+from flask import Blueprint, render_template, abort, request
 from flask_login import current_user, login_required 
 from jinja2 import TemplateNotFound
 from utils.constants import YEAR, SITE_NAME
@@ -45,9 +45,8 @@ def search():
                 # if all conditions are chosen 
                 else:
                     schedule_list = ScheduleDatetime.query.join(UserProfile, ScheduleDatetime.user_opening_slot==UserProfile.id).add_columns(ScheduleDatetime.start_at, ScheduleDatetime.finish_at, UserProfile.id, UserProfile.user_name,UserProfile.main_language, UserProfile.gender, UserProfile.is_supporter,ScheduleDatetime.user_opening_slot, ScheduleDatetime.user_booking_slot).filter(ScheduleDatetime.start_at >= start_at).filter(ScheduleDatetime.finish_at >= start_at).filter(UserProfile.main_language==search_input_handler(form_language_val)).filter(UserProfile.gender==search_input_handler(form_gender_val)).filter(UserProfile.is_supporter==search_input_handler(form_is_supporter_val)).filter(UserProfile.id!=current_user.id).all()
-                ## Todo: initialize input 
 
-                # 取得したデータを整形し保持させ、ページにリダイレクトする
+                # 取得したデータを整形し保持させ、ページを読み込む
                 list = []
                 for i in range(len(schedule_list)):
                     if schedule_list[i]["user_booking_slot"] == None: # If the slot is open 
