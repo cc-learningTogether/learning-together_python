@@ -30,7 +30,7 @@ def search():
         if form_language_val is "-": 
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
-            form_search=form, result="", message = "Select 'Language'")
+            form_search=form, result="", message = "*Select 'Language'")
         try:
             #if gender and is_supporter are not chosen
             if search_input_handler(form_gender_val) == -1 and search_input_handler(form_is_supporter_val) == -1:
@@ -76,7 +76,7 @@ def search():
                     list.append(data) 
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
-            form_search=form, result=list, message="Success")
+            form_search=form, result=list, message="Success!")
         except TemplateNotFound: return abort(404)
     else:
         try:

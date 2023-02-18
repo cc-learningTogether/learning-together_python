@@ -52,7 +52,7 @@ class DateTimeForm(FlaskForm):
         if dt_start: 
             date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
             if ( date - datetime.now() ).total_seconds() < 0 :
-                self.dt_start.errors += (ValidationError("Select a date after today"), ) 
+                self.dt_start.errors += (ValidationError("*Select a date after today"), ) 
 
     # Since we check dt_start should earlier than dt_finish, we don´t need to validation for dt_finish
     # def validate_dt_finish(self, dt_finish):                

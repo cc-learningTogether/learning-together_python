@@ -31,7 +31,9 @@
     </form>
     {% if message.errors %}
     <p>{{message.errors['dt_start'][0]}}</p>
-    {% endif %}
+    {% elif "*" in message or "!" in message %}
+    {{message}}
+    {% endif %} 
     <p>result: {{ result }}</p>
   </div>
 </div>
