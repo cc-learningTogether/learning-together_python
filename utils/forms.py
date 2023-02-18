@@ -52,7 +52,7 @@ class DateTimeForm(FlaskForm):
         if dt_start: 
             date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
             if ( date - datetime.now() ).total_seconds() < 0 :
-                raise ValidationError("Chose later than today")
+                self.dt_start.errors += (ValidationError("Select a date after today"), ) 
 
     # Since we check dt_start should earlier than dt_finish, we don´t need to validation for dt_finish
     # def validate_dt_finish(self, dt_finish):                
@@ -67,7 +67,7 @@ class SearchForm(FlaskForm):
     # TODO set is_supporter field to required when database is ready
     is_supporter = SelectField("Need supporter?", choices=["-", "No/いいえ", "Yes/はい"])
     submit = SubmitField("Submit")
-
+    
 
 # Register Form
 class UserSettingForm(FlaskForm):

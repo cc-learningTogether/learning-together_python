@@ -1,29 +1,37 @@
 <div class="d-flex flex-column align-items-center mt-5">
-	<div class="card w-50 d-flex flex-column align-items-center shadow">
-		<h3 class="mt-5 text-center text-capitalize"> Find your pair-programming partner! </h3>
-		<form class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center" method="post" action="">
-      {{ form_start.hidden_tag() }} 
+  <div class="card w-50 d-flex flex-column align-items-center shadow">
+    <h3 class="mt-5 text-center text-capitalize">
+      Find your pair-programming partner!
+    </h3>
+    <form
+      class="row g-3 mt-3 mb-4 w-75 d-flex justify-content-center align-items-center"
+      method="post"
+      action=""
+    >
+      {{ form_start.hidden_tag() }}
       <div>
-        {{ form_start.dt_start.label }}
-        {{ form_start.dt_start(class="dtpick", autocomplete="off") }} 
+        {{ form_start.dt_start.label }} 
+        {{ form_start.dt_start(class="dtpick",autocomplete="off") }} 
       </div>
       <div class="col-md-6 d-flex flex-column">
-        {{ form_search.language.label }}
-        {{ form_search.language(class_="form-select") }}
+        {{ form_search.language.label }} {{
+        form_search.language(class_="form-select") }}
       </div>
       <div class="col-md-6 d-flex flex-column">
-        {{ form_search.gender.label }}
-        {{ form_search.gender(class_="form-select") }}
-      </div> 
+        {{ form_search.gender.label }} {{
+        form_search.gender(class_="form-select") }}
+      </div>
       <div class="col-md-6">
-        {{ form_search.is_supporter.label }}
-        {{ form_search.is_supporter(class_="form-select") }}
+        {{ form_search.is_supporter.label }} {{
+        form_search.is_supporter(class_="form-select") }}
       </div>
       <div class="col-12 d-flex align-items-center justify-content-center">
         {{ form_search.submit(class_= "form-control") }}
       </div>
-		</form>
-    <p>message: {{ message }}</p>
+    </form>
+    {% if message.errors %}
+    <p>{{message.errors['dt_start'][0]}}</p>
+    {% endif %}
     <p>result: {{ result }}</p>
-	</div>
+  </div>
 </div>

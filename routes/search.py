@@ -26,12 +26,11 @@ def search():
         form_language_val = request.form['language']
         form_gender_val = request.form['gender']
         form_is_supporter_val = request.form['is_supporter']
-        # todo もし当日よりも前の日付を選択したら "you can't chose bofore today"と返す
-        # date, time and language are must to be given! 
+        # date, time and language are must be given! 
         if form_language_val is "-": 
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
-            form_search=form, result="", message="Please chose 'Language'")
+            form_search=form, result="", message = "Select 'Language'")
         try:
             #if gender and is_supporter are not chosen
             if search_input_handler(form_gender_val) == -1 and search_input_handler(form_is_supporter_val) == -1:
@@ -75,14 +74,15 @@ def search():
                     data["start_at"] = schedule_list[i]["start_at"].strftime("%Y/%m/%d %H:%M")  
                     data["finish_at"] = schedule_list[i]["finish_at"].strftime("%Y/%m/%d %H:%M")
                     list.append(data) 
-                
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
-            form_search=form, result=list, message="succsess")
+            form_search=form, result=list, message="Success")
         except TemplateNotFound: return abort(404)
     else:
         try:
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
-            form_search=form)
+            form_search=form,
+            message = dtf_start #validation error message of the date
+            )
         except TemplateNotFound: return abort(404)
