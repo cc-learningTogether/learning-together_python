@@ -17,8 +17,11 @@
       </div>
     </form>
     {% if message :%}
-    <p>From {{date_start}} to {{date_finish}}</p>
-    <p>{{message}}</p>
+    {% if message.errors %}
+    <p>{{message.errors['dt_start'][0]}}</p>
+    {% elif "*" in message or "!" in message %}
+    {{message}}
+    {% endif %} 
     {% endif %}
   </div>
 </div>
