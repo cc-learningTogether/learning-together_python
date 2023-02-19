@@ -26,7 +26,7 @@ def search():
         form_language_val = request.form['language']
         form_gender_val = request.form['gender']
         form_is_supporter_val = request.form['is_supporter']
-        # date, time and language are must be given! 
+        # date, time and language are must be given to search! 
         if form_language_val is "-": 
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
