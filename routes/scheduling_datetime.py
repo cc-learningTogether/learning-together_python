@@ -20,13 +20,13 @@ def scheduling_datetime():
         dt_finish_val = request.form['dt_finish']
         if dt_finish_val == '': # Check input of 'Finish at'
             return render_template('scheduling_datetime.html', year=YEAR, 
-            dtf_form=dtf, message="'Finish' is empty")
+            dtf_form=dtf, message="*'Finish at' is empty")
         # Check two inputs:WTForm validation is valid only by field
         first = datetime.strptime(dt_start_val, "%Y/%m/%d %H:%M")
         second = datetime.strptime(dt_finish_val, "%Y/%m/%d %H:%M")
         if ( second - first ).total_seconds() < 0 :
             return render_template('scheduling_datetime.html', year=YEAR, 
-            dtf_form=dtf, message="'Start' should earlier than 'Finish'")
+            dtf_form=dtf, message="*'Start at' should earlier than 'Finish at'")
         try:
             opening_slot = ScheduleDatetime(start_at = dt_start_val, finish_at = dt_finish_val, user_opening_slot = current_user.id)
             db.session.add(opening_slot)
@@ -36,7 +36,6 @@ def scheduling_datetime():
     else: 
         try:
             return render_template('scheduling_datetime.html', year=YEAR, name=SITE_NAME, 
-            dtf_form=dtf)
+            dtf_form=dtf, message = dtf #validation error message of the date
+            )
         except TemplateNotFound: return abort(404)
-
-
