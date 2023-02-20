@@ -72,10 +72,8 @@
             <button type="submit" id='slot_{{item.schedule_id}}' onclick="bookSlot('{{item.schedule_id}}')">select</button>
           </div>
         {% endfor %}
+        <div id="select_result"></div>
       <!-- </form> -->
-      {% else %}
-        <p>booked!</p>
-        <p>{{result}}</p>
       {% endif %}
       {% block Footer %} 
       {% include "components/footer.html" %} 
@@ -93,14 +91,16 @@
         data: {val: slotId},
         // dataType: "json",
         success: function(data){
-            console.log("good", data)
-          response = data; 
+            response = data; 
+            const select_result = document.getElementById("select_result"); 
+            while(select_result.firstChild){
+                select_result.removeChild(select_result.lastChild); 
+            }
+            $("#select_result").append(response)
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) { 
-        console.log("XMLHTTpRequest", XMLHttpRequest.status);
-        console.log("XMLHTTpRequest", XMLHttpRequest.responseText);
-
-          console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
+        console.log("XMLHTTpRequest status", XMLHttpRequest.status);
+        console.log("XMLHTTpRequest responseText", XMLHttpRequest.responseText);
         }
       });
     }
