@@ -16,7 +16,11 @@ book_route = Blueprint('book', __name__, template_folder="routes")
 def book():
     if request.method == "POST": 
         try:
-            data= request.form["val"]
-            return render_template('book_success.html', id=data)
+            schedule_datetime_id= request.form["val"]
+            # update target Schedule_datetime with current_user.id 
+            target_schedule=ScheduleDatetime.query.filter_by(id=schedule_datetime_id).first()
+            target_schedule.user_booking_slot=current_user.id
+            db.session.commit()
+            return render_template('book_success.html', id=schedule_datetime_id, user=current_user.id)
         except TemplateNotFound: return abort(404)
     return render_template('book_success.html')
