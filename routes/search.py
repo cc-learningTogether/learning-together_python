@@ -15,7 +15,6 @@ from utils.helper import search_input_handler
 search_route = Blueprint('search', __name__, template_folder="routes")
 
 @search_route.route('/search', methods=['GET', 'POST'])
-
 @login_required
 def search():    
     dtf_start = DateTimeForm(dt_finish="") # default value for dt_finish
@@ -27,7 +26,7 @@ def search():
         form_gender_val = request.form['gender']
         form_is_supporter_val = request.form['is_supporter']
         # date, time and language are must be given to search! 
-        if form_language_val is "-": 
+        if form_language_val == "-": 
             return render_template('search.html', year=YEAR, name=SITE_NAME, 
             form_start=dtf_start, 
             form_search=form, result="", message = "*Select 'Language'")
@@ -74,9 +73,10 @@ def search():
                     data["start_at"] = schedule_list[i]["start_at"].strftime("%Y/%m/%d %H:%M")  
                     data["finish_at"] = schedule_list[i]["finish_at"].strftime("%Y/%m/%d %H:%M")
                     list.append(data) 
-            return render_template('search.html', year=YEAR, name=SITE_NAME, 
-            form_start=dtf_start, 
-            form_search=form, result=list, message="")
+            # return render_template('search.html', year=YEAR, name=SITE_NAME, 
+            # form_start=dtf_start, 
+            # form_search=form, result=list, message="")
+            return render_template("book.html", result=list)
         except TemplateNotFound: return abort(404)
     else:
         try:

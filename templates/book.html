@@ -45,9 +45,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
     />
     <!-- datetimepicker jQuery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
     
-	<title>Learning Together</title>
+	<title>Book</title>
 
     {% endblock %}
   </head>
@@ -56,26 +56,45 @@
     {% block Header %} 
 	{% include "components/header.html" %} 
 	{% endblock %} 
-	{%if not current_user.is_authenticated :%} 
-	{% block home_page %} 
-	{% include "components/home_page.html" %} 
-	{% endblock %} 
-	{% else: %} 
-	{% block main_page %} 
-	{% include "components/main_page.html" %} 
-	{% endblock %} 
-	{% endif %} 
-	{% block Footer %} 
-	{% include "components/footer.html" %} 
-	{% endblock %}
+  <div>
+      {% if result :%}
+      <form method="post" action="">
+        {% for item in result %}
+          <div>
+            <div>
+              ID:{{item["id"]}}, {{item["user_name"]}}, {{item["gender"]}}
+            </div>
+            <div>
+              Main Language : {{item["main_language"]}}, {{item["is_supporter"]}}
+            </div>
+            <div>
+              Availability: {{item["start_at"]}}~{{item["finish_at"]}}
+            </div>
+            <input type="submit" value="select" id='slot_{{item.id}}' onclick="bookSlot('{{item.id}}')">
+          </div>
+        {% endfor %}
+      </form>
+      {% else %}
+        <p>booked!</p>
+      {% endif %}
+      {% block Footer %} 
+      {% include "components/footer.html" %} 
+      {% endblock %}
+  
+  </div>
 
 	<script type="text/javascript">
-    //to delete a slot
-    function deleteSlot(slotId){
+    // // to show datetimepicker
+	// 	$(".dtpick").each(function () {
+	// 	  $(this).datetimepicker();
+	// 	});
+
+    //to book a slot 
+    function bookSlot(slotId){
       console.log("click!", slotId)
       let url = ""; 
       $.ajax({
-        url: "/", 
+        url: "/book", 
         data: {val: slotId},
         type: "POST",
         dataType: "json",
@@ -86,10 +105,10 @@
           console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
         }
       });
-      (function(){ 
-        window.alert("Deleted");
-        window.location.reload();
-      }())
+      // (function(){ 
+      //   window.alert("Booked");
+      //   window.location.reload();
+      // }())
     }
 	  </script>
     <script
