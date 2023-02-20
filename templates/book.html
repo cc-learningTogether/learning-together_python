@@ -56,11 +56,11 @@
 	{% endblock %} 
   <div>
       {% if result :%}
-      <form method="post" action="">
+      <!-- <form method="post" action=""> -->
         {% for item in result %}
           <div>
             <div>
-              ID:{{item["id"]}}, {{item["user_name"]}}, {{item["gender"]}}
+              Schedule ID:{{item.schedule_id}}, {{item["user_name"]}}, {{item["gender"]}}
             </div>
             <div>
               Main Language : {{item["main_language"]}}, {{item["is_supporter"]}}
@@ -68,12 +68,14 @@
             <div>
               Availability: {{item["start_at"]}}~{{item["finish_at"]}}
             </div>
-            <input type="submit" value="select" formaction="/book" id='slot_{{item.id}}' onclick="bookSlotttt('{{item.id}}')">
+            <!-- <input type="submit" value="select" id='slot_{{item.schedule_id}}' onclick="bookSlot('{{item.schedule_id}}')"> -->
+            <button type="submit" id='slot_{{item.schedule_id}}' onclick="bookSlot('{{item.schedule_id}}')">select</button>
           </div>
         {% endfor %}
-      </form>
+      <!-- </form> -->
       {% else %}
         <p>booked!</p>
+        <p>{{result}}</p>
       {% endif %}
       {% block Footer %} 
       {% include "components/footer.html" %} 
@@ -85,23 +87,22 @@
     // to book a slot 
     function bookSlot(slotId){
       console.log("click!", slotId)
-      let url = ""; 
       $.ajax({
+        type: "POST",
         url: "/book", 
         data: {val: slotId},
-        type: "POST",
-        dataType: "json",
+        // dataType: "json",
         success: function(data){
+            console.log("good", data)
           response = data; 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) { 
+        console.log("XMLHTTpRequest", XMLHttpRequest.status);
+        console.log("XMLHTTpRequest", XMLHttpRequest.responseText);
+
           console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
         }
       });
-      (function(){ 
-        window.alert("Booked");
-        window.location.reload();
-      }())
     }
 	  </script>
     <script

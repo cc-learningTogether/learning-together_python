@@ -16,6 +16,7 @@ book_route = Blueprint('book', __name__, template_folder="routes")
 def book():
     if request.method == "POST": 
         try:
-            return render_template('book.html')
+            id = request.form["val"]
+            return render_template('book.html', result = id)
         except TemplateNotFound: return abort(404)
     return render_template('book.html')
