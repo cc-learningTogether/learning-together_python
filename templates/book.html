@@ -44,10 +44,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
     />
-    <!-- datetimepicker jQuery CDN -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
     
-	<title>Book</title>
+	<title>Learning together</title>
 
     {% endblock %}
   </head>
@@ -70,7 +68,7 @@
             <div>
               Availability: {{item["start_at"]}}~{{item["finish_at"]}}
             </div>
-            <input type="submit" value="select" id='slot_{{item.id}}' onclick="bookSlot('{{item.id}}')">
+            <input type="submit" value="select" formaction="/book" id='slot_{{item.id}}' onclick="bookSlotttt('{{item.id}}')">
           </div>
         {% endfor %}
       </form>
@@ -84,12 +82,7 @@
   </div>
 
 	<script type="text/javascript">
-    // // to show datetimepicker
-	// 	$(".dtpick").each(function () {
-	// 	  $(this).datetimepicker();
-	// 	});
-
-    //to book a slot 
+    // to book a slot 
     function bookSlot(slotId){
       console.log("click!", slotId)
       let url = ""; 
@@ -105,10 +98,10 @@
           console.log("Error occured while requested \n" + url + "\n" + textStatus +":\n" + errorThrown);
         }
       });
-      // (function(){ 
-      //   window.alert("Booked");
-      //   window.location.reload();
-      // }())
+      (function(){ 
+        window.alert("Booked");
+        window.location.reload();
+      }())
     }
 	  </script>
     <script

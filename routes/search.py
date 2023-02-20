@@ -73,9 +73,6 @@ def search():
                     data["start_at"] = schedule_list[i]["start_at"].strftime("%Y/%m/%d %H:%M")  
                     data["finish_at"] = schedule_list[i]["finish_at"].strftime("%Y/%m/%d %H:%M")
                     list.append(data) 
-            # return render_template('search.html', year=YEAR, name=SITE_NAME, 
-            # form_start=dtf_start, 
-            # form_search=form, result=list, message="")
             return render_template("book.html", result=list)
         except TemplateNotFound: return abort(404)
     else:

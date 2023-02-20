@@ -34,24 +34,5 @@
     {% elif "*" in message or "!" in message %}
     {{message}}
     {% endif %} 
-    <!-- the result will be shown here -->
-    <!-- {% if result :%}
-    <form method="post" action="">
-      {% for item in result %}
-        <div>
-          <div>
-            ID:{{item["id"]}}, {{item["user_name"]}}, {{item["gender"]}}
-          </div>
-          <div>
-            Main Language : {{item["main_language"]}}, {{item["is_supporter"]}}
-          </div>
-          <div>
-            Availability: {{item["start_at"]}}~{{item["finish_at"]}}
-          </div>
-          <input type="submit" value="select" id='slot_{{item.id}}' onclick="bookSlot('{{item.id}}')">
-        </div>
-      {% endfor %}
-    </form>
-    {% endif %} -->
   </div>
 </div>
