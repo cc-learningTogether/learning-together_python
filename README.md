@@ -44,7 +44,7 @@ Steps:
 
 ## 🧰 Options : Use Docker
 
-1. Install a VSCode extension: Remote development 
+1. Install Docker and VSCode extension: Remote development 
 
 2. Press `><` button which you can find at the left-bottom of the VSCode panel.
 
