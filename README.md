@@ -1,14 +1,14 @@
 # 🤝 learning-together<br>
->Support finding pair-programming partner.
->Website is [Here](https://learning-together.fly.dev/)
+>Support finding pair-programming partner.<br>
+>[Here](https://learning-together.fly.dev/) is our website.
 
 ## 🛢 Motivation 
 Help people to find a partner to do pair-programming. 
 
 This app will: 
 
-   - You can find a partner for pair-programming. 
-   - You can offer your free time for doing pair-programming. 
+   - Support finding a partner for pair-programming. 
+   - Support you to offer your free time for doing pair-programming. 
 
 ## 🔧 Tech & tools
 
@@ -18,7 +18,7 @@ This app will:
 - Docker(option)
 
 ## 🏍 Getting Started 
-Before running any scripts, you'll need additional setups. After steps, you should run the next command. 
+Before running any scripts, you'll need additional setups. After 2 steps, you should run the next command. 
 ```python
 
 pip install -r requirements.txt
@@ -27,18 +27,17 @@ python main.py
 ```
 1. Add `.env` and put necessary keys. You can fined a sample at `.env.example`
 
-2. Make a virtual environment(optional)<br>
-<sub><sub>We recommend to use the virtual environment when you develop the code</sub></sub>
+2. Make a virtual environment<br>
 
-**Linux and Apple users**
-   - 1. Type `[test@localhost ~]$ python3 -m venv <name>`
-   - 2. Enter the virtual environment. `source <name>/bin/activate`
+   **Linux and Apple users**
+      - 1. Type `[test@localhost ~]$ python3 -m venv <name>`
+      - 2. Enter the virtual environment. `source <name>/bin/activate`
 
-**Windows users**
-   - 1. Type `>virtualenv .<name>`
-   - 2. Enter the virtual environment. `><name>\Scripts\activate`
+   **Windows users**
+      - 1. Type `>virtualenv .<name>`
+      - 2. Enter the virtual environment. `><name>\Scripts\activate`
 
-To leave the virtual environment. `(<name>) [test@localhost ~]$ deactivate`
+   To leave the virtual environment. `(<name>) [test@localhost ~]$ deactivate`
 
 ## 🧰 Options : Use Docker and Remote development
 
@@ -71,13 +70,11 @@ To leave the virtual environment. `(<name>) [test@localhost ~]$ deactivate`
    ```
 3. Execute `flask db migrate -m 'initial migration'` under `/app`
 
-4. Execute `flask db upgrade'` under `/app`.
+4. Execute `flask db upgrade'` under `/app`
 
-> You can check the database using command `docker exec -it <container name> /bin/sh`
-> ※ Not inside the devcontainer. Execute them at the outside.
-> Accessing the Postgres CLI 
-```psql --username postgres
-```
+   You can check the database using command `docker exec -it <container name> /bin/sh`<br>
+   ※ Not inside the devcontainer. Execute them at the outside.<br>
+   Accessing the Postgres CLI : `psql --username postgres`
 
 ## 🏜 How To Use
 
