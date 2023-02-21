@@ -1,6 +1,5 @@
 # 🤝 learning-together<br>
 >Support finding pair-programming partner.<br>
->[Here](https://learning-together.fly.dev/) is our website.
 
 ## 🛢 Motivation 
 Help people to find a partner to do pair-programming. 
