@@ -25,31 +25,36 @@ pip install -r requirements.txt
 python main.py
 
 ```
-1. Add `.env` and put necessary keys. You can fined a sample at `.env.example`
+Steps: 
 
-2. Make a virtual environment<br>
+   1. Add `.env` then put necessary values. You can fined a sample at `.env.example`
 
-   **Linux and Apple users**
-      - 1. Type `[test@localhost ~]$ python3 -m venv <name>`
-      - 2. Enter the virtual environment. `source <name>/bin/activate`
+   2. Make a virtual environment<br>
 
-   **Windows users**
-      - 1. Type `>virtualenv .<name>`
-      - 2. Enter the virtual environment. `><name>\Scripts\activate`
+      - Linux and Apple users
+      
+         1. Type: `[test@localhost ~]$ python3 -m venv <name>`
+         2. Enter the virtual environment: `source <name>/bin/activate`
 
-   To leave the virtual environment. `(<name>) [test@localhost ~]$ deactivate`
+      - Windows users
+      
+         1. Type: `>virtualenv .<name>`
+         2. Enter the virtual environment: `><name>\Scripts\activate`
 
-## 🧰 Options : Use Docker and Remote development
+      To leave the virtual environment. `(<name>) [test@localhost ~]$ deactivate`
 
-1. Install a VSCode extension : Remote development 
+## 🧰 Options : Use Docker
+
+1. Install a VSCode extension: Remote development 
 
 2. Press `><` button which you can find at the left-bottom of the VSCode panel.
 
 3. Chose `Open Folder in Container` of pop-up panel.<br>
 
 4. Click a button which labeled as `Open`
-   - If it is succeeded, you can see `Dev Container:ltw remote` at the next to the `><` button.<br>
-     You can see the image of the website from `http://localhost:8000`.
+   - If it is succeeded, you can see `Dev Container:ltw remote` at the next to the `><` button.
+   
+   - You can see the image of the website from `http://localhost:8000`.
 
 6. Enable Github in your devcontainer.
 
@@ -72,9 +77,9 @@ python main.py
 
 4. Execute `flask db upgrade'` under `/app`
 
-   You can check the database using command `docker exec -it <container name> /bin/sh`<br>
-   ※ Not inside the devcontainer. Execute them at the outside.<br>
-   Accessing the Postgres CLI : `psql --username postgres`
+   - You can check the database using command `docker exec -it <container name> /bin/sh`<br>
+      ※ Not inside the devcontainer. Execute them at the outside.<br>
+   - Accessing the Postgres CLI : `psql --username postgres`
 
 ## 🏜 How To Use
 
