@@ -8,6 +8,8 @@ from routes.settings import settings_route
 from routes.scheduling_datetime import scheduling_datetime_route
 from routes.search import search_route
 from routes.manager_pannel import manager_route
+from routes.book import book_route
+from routes.users_manager import users_manager_route
 
 
 def initialize_routes(app):
@@ -30,3 +32,7 @@ def initialize_routes(app):
     app.register_blueprint(search_route)
 
     app.register_blueprint(manager_route)
+
+    app.register_blueprint(book_route)
+
+    app.register_blueprint(users_manager_route)

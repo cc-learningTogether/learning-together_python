@@ -2,7 +2,9 @@ import uuid
 import os
 
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import cast, String
+# from sqlalchemy import cast, String #miku
+from sqlalchemy import cast, String, create_engine #miku
+from sqlalchemy.engine import reflection #miku
 from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -15,30 +17,34 @@ from utils.email import send_change_password_email, send_change_password_confirm
 
 
 def create_admin():
-    users = UserProfile.query.all()
-    if len(users) == 0 and os.getenv("ADMIN_EMAIL"):
-        user_id = str(uuid.uuid4())
-        password = "admin1" if not os.getenv("ADMIN_PASSWORD") else os.getenv("ADMIN_PASSWORD")
-        hashed_password = generate_password_hash(
-            password,
-            method='pbkdf2:sha256',
-            salt_length=8
-        )
-        user = UserProfile(
-            email=os.getenv("ADMIN_EMAIL"),
-            user_name="admin" if not os.getenv("ADMIN_USERNAME") else os.getenv("ADMIN_USERNAME"),
-            user_profile_id=user_id,
-            is_supporter=True,
-            is_admin=True
-        )
+    engin = create_engine(os.getenv('POSTGRES_URL')) #miku
+    inspect = db.inspect(engin).get_table_names() #miku
 
-        password = UserPassword(user_id=user_id, password=hashed_password)
-        db.session.add(user)
-        db.session.add(password)
-        db.session.commit()
+    if inspect != []: #miku
+        users = UserProfile.query.all()
+        if len(users) == 0 and os.getenv("ADMIN_EMAIL"):
+            user_id = str(uuid.uuid4())
+            password = "admin1" if not os.getenv("ADMIN_PASSWORD") else os.getenv("ADMIN_PASSWORD")
+            hashed_password = generate_password_hash(
+                password,
+                method='pbkdf2:sha256',
+                salt_length=8
+            )
+            user = UserProfile(
+                email=os.getenv("ADMIN_EMAIL"),
+                user_name="admin" if not os.getenv("ADMIN_USERNAME") else os.getenv("ADMIN_USERNAME"),
+                user_profile_id=user_id,
+                is_supporter=True,
+                is_admin=True
+            )
 
-    if not os.getenv("ADMIN_EMAIL"):
-        print("The ADMIN_EMAIL must be set in the env file")
+            password = UserPassword(user_id=user_id, password=hashed_password)
+            db.session.add(user)
+            db.session.add(password)
+            db.session.commit()
+
+        if not os.getenv("ADMIN_EMAIL"):
+            print("The ADMIN_EMAIL must be set in the env file")
 
 
 class AuthManager(UserMixin):

@@ -21,7 +21,6 @@ class RegisterForm(FlaskForm):
 
 
 # Login form
-
 class LoginForm(FlaskForm):
     login_email = EmailField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
     login_password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Password"})
@@ -35,7 +34,6 @@ class ForgotPswForm(FlaskForm):
 
 
 # change password form
-
 class ChangePSWForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()],
                              render_kw={"placeholder": "Password"})
@@ -44,35 +42,32 @@ class ChangePSWForm(FlaskForm):
     submit_change_password = SubmitField("Submit")
 
 
-class DateTimeForm_start(FlaskForm):
-    dt_start = StringField("datetime_start", validators=[DataRequired()])
-
+class DateTimeForm(FlaskForm):
+    dt_start = StringField("*Start at", validators=[DataRequired()])
+    dt_finish = StringField("*Finish at")
+    submit_register = SubmitField("Submit")
+    
     def validate_dt_start(self, dt_start):
-        # if the user input incorrect datetime 
-        date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
-        if (date - datetime.now()).total_seconds() < 0:
-            raise ValidationError("Chose later than today")
+        # if the user input incorrect datetime
+        if dt_start: 
+            date = datetime.strptime(dt_start.data, "%Y/%m/%d %H:%M")
+            if ( date - datetime.now() ).total_seconds() < 0 :
+                self.dt_start.errors += (ValidationError("*Select a date for 'Start at' after today"), ) 
 
-
-class DateTimeForm_finish(FlaskForm):
-    dt_finish = StringField("datetime_finish", validators=[DataRequired()])
-
-    def validate_dt_finish(self, dt_finish):
-        # if the user input incorrect datetime 
-        date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
-        if (date - datetime.now()).total_seconds() < 0:
-            raise ValidationError("Chose later than today")
-
-
-# Search Form
+    # Since we check dt_start should earlier than dt_finish, we don´t need to validation for dt_finish
+    # def validate_dt_finish(self, dt_finish):                
+    #     # if the user input incorrect datetime 
+    #     date = datetime.strptime(dt_finish.data, "%Y/%m/%d %H:%M")
+    #     if ( date - datetime.now() ).total_seconds() < 0 :
+    #         raise ValidationError("Chose later than today")
+    
 class SearchForm(FlaskForm):
-    # TODO set language field to required when database is ready
-    language = SelectField("Language", choices=["-", "English/英語", "Japanese/日本語"])
+    language = SelectField("*Language", choices=["-", "English/英語", "Japanese/日本語"])
     gender = SelectField("Gender", choices=["-", "Male/男", "Female/女"])
     # TODO set is_supporter field to required when database is ready
-    is_supporter = SelectField("Are you a supporter?", choices=["-", "No/いいえ", "Yes/はい"])
-    submit = SubmitField("Update")
-
+    is_supporter = SelectField("Need supporter?", choices=["-", "No/いいえ", "Yes/はい"])
+    submit = SubmitField("Submit")
+    
 
 # Register Form
 class UserSettingForm(FlaskForm):
