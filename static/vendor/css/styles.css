@@ -17,9 +17,15 @@ a{
 }
 
 a:hover{
-    color: red;
+    color: #2c3e50;
 }
 
+.nav-tabs > li > .nav-link {
+   color:#2c3e50;
+}
+.nav-tabs > li > .nav-link.active {
+   color:#6200ea;
+}
 
 
 .text-gray{
