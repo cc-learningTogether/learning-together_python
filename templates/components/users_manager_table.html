@@ -1,0 +1,63 @@
+{% block content %}
+<table id="data" class="table table-striped">
+	<thead>
+	<tr>
+		<th>user_name</th>
+		<th>email</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for user in users %}
+	<tr>
+		<td>{{ user.user_name }}</td>
+		<td>{{ user.email }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+      $('#data').DataTable({
+        ajax: '/api/data',
+        serverSide: true,
+        columns: [
+          {data: 'username'},
+          {data: 'email'}
+        ],
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}

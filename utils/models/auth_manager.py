@@ -3,8 +3,8 @@ import os
 
 from sqlalchemy.exc import IntegrityError
 # from sqlalchemy import cast, String #miku
-from sqlalchemy import cast, String, create_engine #miku
-from sqlalchemy.engine import reflection #miku
+from sqlalchemy import cast, String, create_engine  # miku
+from sqlalchemy.engine import reflection  # miku
 from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -14,13 +14,14 @@ from database.models.password import UserPassword
 
 from utils.helper import register_input_handler
 from utils.email import send_change_password_email, send_change_password_confirmation
+from utils.config import database_config
 
 
 def create_admin():
-    engin = create_engine(os.getenv('POSTGRES_URL')) #miku
-    inspect = db.inspect(engin).get_table_names() #miku
+    engine = create_engine(database_config())
+    inspect = db.inspect(engine).get_table_names()
 
-    if inspect != []: #miku
+    if inspect != []:  # miku
         users = UserProfile.query.all()
         if len(users) == 0 and os.getenv("ADMIN_EMAIL"):
             user_id = str(uuid.uuid4())
